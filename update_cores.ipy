@@ -24,6 +24,7 @@ cores = [
     #"mednafen_ngp",
     #"mednafen_wswan"
     #"citra"
+    #"pcee2"
 ]
 
 archs = ["armeabi-v7a", "arm64-v8a", "x86", "x86_64"]

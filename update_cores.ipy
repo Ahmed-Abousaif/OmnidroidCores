@@ -82,7 +82,6 @@ dependencies {
 """
 
 omnidroid_core_names = {
-    "melondsds": "melonds"
 }
 
 def write_file(chunks, content):

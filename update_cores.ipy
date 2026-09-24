@@ -23,7 +23,7 @@ cores = [
     "mednafen_ngp",
     "mednafen_wswan",
     "citra",
-    "pcee2",
+    "armsx2",
     "dolphin",
 ]
 

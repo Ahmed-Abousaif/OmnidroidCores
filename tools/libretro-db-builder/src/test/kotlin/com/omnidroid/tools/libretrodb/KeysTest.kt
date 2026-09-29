@@ -57,4 +57,13 @@ class KeysTest {
         assertEquals("the lion king (world)", Keys.normalizeTitle("The_Lion, King (World)"))
         assertEquals("super mario world", Keys.normalizeTitle("Super Mario World"))
     }
+
+    @Test
+    fun dreamcastRdbParsesAllGames() {
+        val file = java.io.File("cache/Sega_-_Dreamcast.rdb")
+        if (file.exists()) {
+            val rows = RdbGames.read(file, "dreamcast")
+            org.junit.Assert.assertTrue("Expected over 1000 Dreamcast games, got ${rows.size}", rows.size > 1000)
+        }
+    }
 }

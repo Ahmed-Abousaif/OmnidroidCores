@@ -49,7 +49,7 @@ internal object RdbGames {
     private fun shouldKeep(row: GameRow): Boolean {
         val name = row.name ?: row.romName ?: return false
         if (name.isBlank()) return false
-        if (row.system in setOf("psx", "scd", "pce", "dreamcast")) {
+        if (row.system in setOf("psx", "scd", "pce")) {
             if (AUDIO_TRACK.containsMatchIn(name) || (row.romName != null && AUDIO_TRACK.containsMatchIn(row.romName))) {
                 return false
             }

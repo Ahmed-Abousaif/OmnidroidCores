@@ -16,10 +16,13 @@ internal data class GameRow(
     val serial: String?,
     val code: String?,
     val size: Long?,
+    val rawName: String? = name,
 )
 
 internal object RdbGames {
     private val MAGIC = "RARCHDB".toByteArray(Charsets.US_ASCII)
+
+    private val AUDIO_TRACK = Regex("""\(Track\s+(?!0?1\b)\d+\)""", RegexOption.IGNORE_CASE)
 
     fun read(
         file: File,
@@ -34,10 +37,30 @@ internal object RdbGames {
             while (true) {
                 val value = reader.readValue() ?: break
                 val map = value as? Map<*, *> ?: continue
-                rows += toRow(map, system)
+                val row = toRow(map, system)
+                if (shouldKeep(row)) {
+                    rows += row
+                }
             }
             return rows
         }
+    }
+
+    private fun shouldKeep(row: GameRow): Boolean {
+        val name = row.name ?: row.romName ?: return false
+        if (name.isBlank()) return false
+        if (row.system in setOf("psx", "scd", "pce", "dreamcast")) {
+            if (AUDIO_TRACK.containsMatchIn(name) || (row.romName != null && AUDIO_TRACK.containsMatchIn(row.romName))) {
+                return false
+            }
+        }
+        if (name.contains("Magazine Demo", ignoreCase = true) ||
+            name.contains("Interactive Sampler", ignoreCase = true) ||
+            name.contains("PlayStation Underground", ignoreCase = true)
+        ) {
+            return false
+        }
+        return true
     }
 
     fun firstKeys(file: File): Set<String> {
@@ -59,6 +82,7 @@ internal object RdbGames {
         val rom = map["rom"] as? Map<String, Any?>
         val description = string(map, "description")
         val name = string(map, "name")
+        // Boxart files are named after the short title. description is often a paragraph.
         val romName = string(rom, "name") ?: string(map, "rom_name") ?: name
         val serialRaw = string(rom, "serial") ?: string(map, "serial")
         val serial = normaliseSerial(system, serialRaw)
@@ -71,7 +95,7 @@ internal object RdbGames {
         val size = long(rom, "size") ?: long(map, "size")
         val year = (long(map, "releaseyear") ?: long(map, "release_year"))?.toInt()
         return GameRow(
-            name = description ?: name,
+            name = name ?: description,
             system = system,
             romName = romName,
             romBase = Keys.romBase(romName),

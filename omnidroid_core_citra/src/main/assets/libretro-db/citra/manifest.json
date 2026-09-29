@@ -1,1 +1,1 @@
-{"schemaVersion":1,"slices":[{"sliceId":"3ds","systems":["3ds"],"file":"3ds.sqlite.gz","sha256":"aceabd07d5cd133af733f7665d296a2ddc1b0384023fe1ddf4f2b924e4eb4251","size":83801,"rows":2076}],"manifestSha":"08edcd8608b91b172510a7fe971e372d74f0b12b637cae63e6257ec6f37b127a"}
+{"schemaVersion":2,"slices":[{"sliceId":"3ds","systems":["3ds"],"file":"3ds.sqlite.gz","sha256":"877838336602be13744f20c650d3ce15fb12f9407b2afdd59682b408f1c09365","size":208224,"rows":2076}],"manifestSha":"c34f44ceabf36af2e1feb35f6df7e68e4de50024809750bb520e6bc394ae7756"}

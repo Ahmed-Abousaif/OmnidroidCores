@@ -32,16 +32,27 @@ internal object SliceWriter {
                     serial TEXT,
                     code TEXT,
                     size INTEGER,
-                    romHash INTEGER
+                    romHash INTEGER,
+                    normalizedName TEXT,
+                    rawName TEXT
                 )
                 """.trimIndent(),
             )
+            statement.execute("CREATE INDEX IF NOT EXISTS idx_games_norm ON games(system, normalizedName) WHERE normalizedName IS NOT NULL")
+            statement.execute("CREATE INDEX IF NOT EXISTS idx_games_crc ON games(system, crc32) WHERE crc32 IS NOT NULL")
+            statement.execute("CREATE INDEX IF NOT EXISTS idx_games_serial ON games(system, serial) WHERE serial IS NOT NULL")
+            statement.execute("CREATE INDEX IF NOT EXISTS idx_games_code ON games(system, code) WHERE code IS NOT NULL")
+            statement.execute("CREATE INDEX IF NOT EXISTS idx_games_romhash ON games(system, romHash) WHERE romHash IS NOT NULL")
             val insert =
                 connection.prepareStatement(
-                    "INSERT INTO games (name, system, crc32, serial, code, size, romHash) VALUES (?, ?, ?, ?, ?, ?, ?)",
+                    "INSERT INTO games (name, system, crc32, serial, code, size, romHash, normalizedName, rawName) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 )
             rows.sortedWith(compareBy({ it.system }, { it.name }, { it.crc32 }, { it.serial })).forEach { row ->
-                insert.setString(1, row.name)
+                val rawName = row.rawName ?: row.name
+                val humanized = rawName?.let(Keys::humanize) ?: rawName
+                val normalized = humanized?.let(Keys::normalizeTitle)
+                val rawToStore = if (rawName != humanized) rawName else null
+                insert.setString(1, humanized)
                 insert.setString(2, row.system)
                 insert.setString(3, row.crc32)
                 insert.setString(4, row.serial)
@@ -49,6 +60,8 @@ internal object SliceWriter {
                 if (row.size == null) insert.setNull(6, java.sql.Types.INTEGER) else insert.setLong(6, row.size)
                 val hash = Keys.romHash(row.romBase)
                 if (hash == null) insert.setNull(7, java.sql.Types.INTEGER) else insert.setLong(7, hash)
+                insert.setString(8, normalized)
+                if (rawToStore == null) insert.setNull(9, java.sql.Types.VARCHAR) else insert.setString(9, rawToStore)
                 insert.addBatch()
             }
             insert.executeBatch()

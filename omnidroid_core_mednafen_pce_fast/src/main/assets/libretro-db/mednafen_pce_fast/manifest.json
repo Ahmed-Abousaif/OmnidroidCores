@@ -1,1 +1,1 @@
-{"schemaVersion":1,"slices":[{"sliceId":"pce","systems":["pce"],"file":"pce.sqlite.gz","sha256":"1eda2c9e74088aa22b15baa395988a16e99335d628d6f4fac02c65a685a34231","size":21229,"rows":583}],"manifestSha":"d8226da54a97961ee80eb65a2c48ed109da6aec6c00d4f569a9943d64b5ac480"}
+{"schemaVersion":2,"slices":[{"sliceId":"pce","systems":["pce"],"file":"pce.sqlite.gz","sha256":"b75b46395c64ba91203181d5fab7d3b59e07432b17bfd933efc216a4c33fd516","size":55643,"rows":530}],"manifestSha":"b1abaadec22b40448a357af83f2a4a2dd08a2b0cc8c61d2cd0ccfb9c95486822"}

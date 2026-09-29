@@ -1,1 +1,1 @@
-{"schemaVersion":1,"slices":[{"sliceId":"dreamcast","systems":["dreamcast"],"file":"dreamcast.sqlite.gz","sha256":"47a896a4bc21a7ea839878a9c9100b06726093b2b83ff18048a2debd1aa2d368","size":60783,"rows":1660}],"manifestSha":"8092ddfb7e807d4b05630d94d88c681b7f45933f3748253f20a5471bb4f840cf"}
+{"schemaVersion":2,"slices":[{"sliceId":"dreamcast","systems":["dreamcast"],"file":"dreamcast.sqlite.gz","sha256":"5e0ebc4fde9eb4565d5c211c9beb3e0efc96cd024edbff188c289faf98389503","size":865,"rows":3}],"manifestSha":"4d56146bd7795dc8a6ec4990fe1945c47d523d1c868960f28cbdbed9cd628a69"}

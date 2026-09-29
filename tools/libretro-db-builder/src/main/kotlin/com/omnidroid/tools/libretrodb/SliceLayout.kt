@@ -7,7 +7,7 @@ internal data class SliceSpec(
 )
 
 internal object SliceLayout {
-    const val SCHEMA_VERSION = 1
+    const val SCHEMA_VERSION = 2
 
     val slices =
         listOf(

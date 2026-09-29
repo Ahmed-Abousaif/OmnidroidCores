@@ -65,4 +65,29 @@ internal object Keys {
         if (romName.isNullOrBlank()) return null
         return romName.substringBeforeLast('.').lowercase(Locale.US).ifBlank { null }
     }
+
+    private val ARTICLE_SORTED =
+        Regex("""^(.*),\s*(The|A|An)(\b.*)$""", RegexOption.IGNORE_CASE)
+
+    fun humanize(name: String?): String? {
+        if (name.isNullOrBlank()) return null
+        val match = ARTICLE_SORTED.matchEntire(name.trim()) ?: return name
+        val body = match.groupValues[1].trim()
+        val article = match.groupValues[2]
+        val rest = match.groupValues[3]
+        if (body.isEmpty()) return name
+        return "$article $body$rest".replace(Regex("""\s{2,}"""), " ").trim()
+    }
+
+    fun normalizeTitle(value: String?): String? {
+        if (value.isNullOrBlank()) return null
+        val cleaned =
+            value
+                .lowercase(Locale.US)
+                .replace('_', ' ')
+                .replace(",", "")
+                .replace(Regex("""\s+"""), " ")
+                .trim()
+        return cleaned.takeIf { it.isNotBlank() }
+    }
 }

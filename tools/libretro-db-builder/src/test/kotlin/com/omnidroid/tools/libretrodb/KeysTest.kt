@@ -43,4 +43,18 @@ class KeysTest {
     fun crcIsEightUpperHexDigits() {
         assertEquals("DDB5205D", Keys.crcHex(byteArrayOf(0xDD.toByte(), 0xB5.toByte(), 0x20, 0x5D)))
     }
+
+    @Test
+    fun humanizeConvertsArticleSortedTitles() {
+        assertEquals("The Lion King (World)", Keys.humanize("Lion King, The (World)"))
+        assertEquals("The Legend of Zelda (USA)", Keys.humanize("Legend of Zelda, The (USA)"))
+        assertEquals("A Link to the Past", Keys.humanize("Link to the Past, A"))
+        assertEquals("Super Mario World", Keys.humanize("Super Mario World"))
+    }
+
+    @Test
+    fun normalizeTitleCleansPunctuationAndWhitespace() {
+        assertEquals("the lion king (world)", Keys.normalizeTitle("The_Lion, King (World)"))
+        assertEquals("super mario world", Keys.normalizeTitle("Super Mario World"))
+    }
 }

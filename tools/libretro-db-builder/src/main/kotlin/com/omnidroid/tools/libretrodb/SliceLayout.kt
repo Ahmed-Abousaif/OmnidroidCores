@@ -25,7 +25,7 @@ internal object SliceLayout {
             SliceSpec("psx", listOf("psx"), listOf("pcsx_rearmed")),
             SliceSpec("psp", listOf("psp"), listOf("ppsspp")),
             SliceSpec("arcade", listOf("fbneo", "mame2003plus"), listOf("fbneo", "mame2003_plus")),
-            SliceSpec("nds", listOf("nds"), listOf("desmume", "melondsds", "melonds")),
+            SliceSpec("nds", listOf("nds"), listOf("melondsds")),
             SliceSpec("3ds", listOf("3ds"), listOf("azahar", "citra")),
             SliceSpec("atari7800", listOf("atari7800"), listOf("prosystem")),
             SliceSpec("lynx", listOf("lynx"), listOf("handy")),

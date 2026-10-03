@@ -9,10 +9,8 @@ class BundledDatabaseTest {
     @Test
     fun sharedSlicesAreByteIdenticalAndDetectionIndexIsSmall() {
         val cores = File("../..")
-        val desmume = File(cores, "omnidroid_core_desmume/src/main/assets/libretro-db/desmume/nds.sqlite.gz")
-        val melonds = File(cores, "omnidroid_core_melonds/src/main/assets/libretro-db/melonds/nds.sqlite.gz")
-        assertTrue(desmume.exists())
-        assertEquals(desmume.readBytes().toList(), melonds.readBytes().toList())
+        val melondsds = File(cores, "omnidroid_core_melondsds/src/main/assets/libretro-db/melondsds/nds.sqlite.gz")
+        assertTrue(melondsds.exists())
         val detect =
             File(
                 "../..",

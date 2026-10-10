@@ -84,8 +84,11 @@ internal object Keys {
         val cleaned =
             value
                 .lowercase(Locale.US)
+                .replace(Regex("""\.\w{1,4}$"""), "")
+                .replace(Regex("""\s*\[[^\]]*\]"""), "")
                 .replace('_', ' ')
                 .replace(",", "")
+                .replace(Regex("""[-:]+"""), " ")
                 .replace(Regex("""\s+"""), " ")
                 .trim()
         return cleaned.takeIf { it.isNotBlank() }

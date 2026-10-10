@@ -1,1 +1,1 @@
-{"schemaVersion":2,"slices":[{"sliceId":"dos","systems":["dos"],"file":"dos.sqlite.gz","sha256":"6b91b0e7622c2bc0080a5f523b99c3486d6b02eb6a1cd055685308c5ce896077","size":1300357,"rows":20507}],"manifestSha":"827a4951aa0716fffce15c3a281e5fd73fc96a275527b767352bbecd5fdead1c"}
+{"schemaVersion":3,"slices":[{"sliceId":"dos","systems":["dos"],"file":"dos.sqlite.gz","sha256":"4f3a06711d91d0e75fdc7bc334140bdce133f00c0b5a2e1f4105306dd4123ae1","size":735770,"rows":20507}],"manifestSha":"b31099fecf0c5e67b0e3f38210a87bb14ac37282e5aeb75eeb4309c3cdc51786"}

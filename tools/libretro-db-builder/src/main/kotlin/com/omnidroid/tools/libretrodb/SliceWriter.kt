@@ -21,8 +21,12 @@ internal object SliceWriter {
         if (file.exists()) file.delete()
         file.parentFile?.mkdirs()
         DriverManager.getConnection("jdbc:sqlite:${file.absolutePath}").use { connection ->
-            connection.autoCommit = false
             val statement = connection.createStatement()
+            statement.execute("PRAGMA page_size = 4096")
+            statement.execute("PRAGMA journal_mode = OFF")
+            statement.execute("PRAGMA synchronous = OFF")
+            statement.execute("PRAGMA temp_store = MEMORY")
+            connection.autoCommit = false
             statement.execute(
                 """
                 CREATE TABLE games (
@@ -38,11 +42,6 @@ internal object SliceWriter {
                 )
                 """.trimIndent(),
             )
-            statement.execute("CREATE INDEX IF NOT EXISTS idx_games_norm ON games(system, normalizedName) WHERE normalizedName IS NOT NULL")
-            statement.execute("CREATE INDEX IF NOT EXISTS idx_games_crc ON games(system, crc32) WHERE crc32 IS NOT NULL")
-            statement.execute("CREATE INDEX IF NOT EXISTS idx_games_serial ON games(system, serial) WHERE serial IS NOT NULL")
-            statement.execute("CREATE INDEX IF NOT EXISTS idx_games_code ON games(system, code) WHERE code IS NOT NULL")
-            statement.execute("CREATE INDEX IF NOT EXISTS idx_games_romhash ON games(system, romHash) WHERE romHash IS NOT NULL")
             val insert =
                 connection.prepareStatement(
                     "INSERT INTO games (name, system, crc32, serial, code, size, romHash, normalizedName, rawName) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",

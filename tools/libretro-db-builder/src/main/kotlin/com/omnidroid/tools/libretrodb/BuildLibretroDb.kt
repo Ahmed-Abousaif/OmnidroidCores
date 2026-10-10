@@ -97,7 +97,10 @@ private fun buildSlices(
     val scratch = File(cache, "slices")
     scratch.mkdirs()
     return SliceLayout.slices.map { spec ->
-        val selected = rows.filter { it.system in spec.systems }
+        val selected =
+            rows
+                .filter { it.system in spec.systems }
+                .distinctBy { listOf(it.system, it.name, it.crc32, it.serial, it.code, it.romBase) }
         val sqlite = File(scratch, "${spec.id}.sqlite")
         SliceWriter.writeGames(sqlite, selected)
         val gzip = SliceWriter.gzip(sqlite)

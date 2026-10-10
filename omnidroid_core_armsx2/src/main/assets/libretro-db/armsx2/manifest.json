@@ -1,1 +1,1 @@
-{"schemaVersion":2,"slices":[{"sliceId":"ps2","systems":["ps2"],"file":"ps2.sqlite.gz","sha256":"2ff4f822a28934dc46360004fdea44fcb1696782d140d7fa2cc52e35d820208d","size":1072136,"rows":13184}],"manifestSha":"6ffffe08ece73a8f22cb907e9e0ee698cd992c13a02aa6ddbc5e653e25e56d71"}
+{"schemaVersion":3,"slices":[{"sliceId":"ps2","systems":["ps2"],"file":"ps2.sqlite.gz","sha256":"fc8f236d55a382e8ee4baaec8cbd021022988dc9ee4961cebc0ac5ffd0176fba","size":579288,"rows":11949}],"manifestSha":"6b82084dbf0e7bd160b0112a2b8d5519ca51663c78c5cd603e2757f8fac15d06"}

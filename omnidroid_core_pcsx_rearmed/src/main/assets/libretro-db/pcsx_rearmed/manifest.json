@@ -1,1 +1,1 @@
-{"schemaVersion":2,"slices":[{"sliceId":"psx","systems":["psx"],"file":"psx.sqlite.gz","sha256":"f6c066ea5e2c57b316a9549bd1ee41a8ddc689cda03ac98ad34ca5b0649cc236","size":1014185,"rows":13387}],"manifestSha":"682e85ecf1771d15e477e7613e9a91f60d6822e1b91a75fcd71690e63578cb03"}
+{"schemaVersion":3,"slices":[{"sliceId":"psx","systems":["psx"],"file":"psx.sqlite.gz","sha256":"e61505019387029b13e495f57518db83b5fa13ca34dfb8fe313b92ee859d2f5f","size":532764,"rows":11344}],"manifestSha":"dfac29f1b86e87b4262472d6f2b5268920b2920fd8432fa509885396527967c4"}

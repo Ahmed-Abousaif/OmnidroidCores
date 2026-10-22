@@ -1,1 +1,1 @@
-{"schemaVersion":3,"slices":[{"sliceId":"lynx","systems":["lynx"],"file":"lynx.sqlite.gz","sha256":"a735594e857035c18137324df21b9d91daf38f0c272836223a418270df3c31b5","size":32733,"rows":986}],"manifestSha":"68bc220b1bcd1a2c3eb233b5ace771994dc5d135fd0c00ff903262fac5e1b7b9"}
+{"schemaVersion":3,"slices":[{"sliceId":"lynx","systems":["lynx"],"file":"lynx.sqlite.gz","sha256":"7967dbdb00ced81837c997c6e479915fe47c17a93680ef3dc129d92589390eac","size":30232,"rows":919}],"manifestSha":"2d0b0ed678169211aecb829fa8792bea70314af0a0cf699dbea44a0be3052f0f"}

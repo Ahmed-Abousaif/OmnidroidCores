@@ -1,1 +1,0 @@
-{"schemaVersion":3,"slices":[{"sliceId":"arcade","systems":["fbneo","mame2003plus"],"file":"arcade.sqlite.gz","sha256":"6a2f7a40676f29c84a71a99d5fa27ed26b181b34af22632544e27b784d2d6b80","size":630523,"rows":17455}],"manifestSha":"7b8ea6c2cd387f86999383ebb6b77793afdd7e77cffb2ce0aeba91e1297fd6d5"}

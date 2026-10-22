@@ -150,6 +150,7 @@ private fun writeDetection(
             """
             CREATE TABLE arcade_sets (
                 id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL,
+                setName TEXT NOT NULL,
                 setHash INTEGER NOT NULL,
                 systems TEXT NOT NULL
             )
@@ -175,12 +176,13 @@ private fun writeDetection(
             """.trimIndent(),
         )
         statement.execute("CREATE UNIQUE INDEX index_arcade_sets_setHash ON arcade_sets (setHash)")
+        statement.execute("CREATE INDEX index_arcade_sets_setName ON arcade_sets (setName)")
         statement.execute("CREATE INDEX index_arcade_markers_setHash ON arcade_markers (setHash)")
         statement.execute("CREATE INDEX index_bin_carts_crc ON bin_carts (crc)")
 
         val fbneo = setNames(rows, "fbneo")
         val mame = setNames(rows, "mame2003plus")
-        val setInsert = connection.prepareStatement("INSERT INTO arcade_sets (setHash, systems) VALUES (?, ?)")
+        val setInsert = connection.prepareStatement("INSERT INTO arcade_sets (setName, setHash, systems) VALUES (?, ?, ?)")
         (fbneo + mame).distinct().forEach { name ->
             val hash = Keys.romHash(name) ?: return@forEach
             val systems =
@@ -188,8 +190,9 @@ private fun writeDetection(
                     "fbneo".takeIf { name in fbneo },
                     "mame2003plus".takeIf { name in mame },
                 ).joinToString(",")
-            setInsert.setLong(1, hash)
-            setInsert.setString(2, systems)
+            setInsert.setString(1, name)
+            setInsert.setLong(2, hash)
+            setInsert.setString(3, systems)
             setInsert.addBatch()
         }
         setInsert.executeBatch()

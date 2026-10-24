@@ -38,13 +38,14 @@ internal object SliceWriter {
                     size INTEGER,
                     romHash INTEGER,
                     normalizedName TEXT,
-                    rawName TEXT
+                    rawName TEXT,
+                    thumbnailPath TEXT
                 )
                 """.trimIndent(),
             )
             val insert =
                 connection.prepareStatement(
-                    "INSERT INTO games (name, system, crc32, serial, code, size, romHash, normalizedName, rawName) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                    "INSERT INTO games (name, system, crc32, serial, code, size, romHash, normalizedName, rawName, thumbnailPath) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 )
             rows.sortedWith(compareBy({ it.system }, { it.name }, { it.crc32 }, { it.serial })).forEach { row ->
                 val rawName = row.rawName ?: row.name
@@ -61,6 +62,7 @@ internal object SliceWriter {
                 if (hash == null) insert.setNull(7, java.sql.Types.INTEGER) else insert.setLong(7, hash)
                 insert.setString(8, normalized)
                 if (rawToStore == null) insert.setNull(9, java.sql.Types.VARCHAR) else insert.setString(9, rawToStore)
+                if (row.thumbnailPath == null) insert.setNull(10, java.sql.Types.VARCHAR) else insert.setString(10, row.thumbnailPath)
                 insert.addBatch()
             }
             insert.executeBatch()

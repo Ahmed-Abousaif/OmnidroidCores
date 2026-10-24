@@ -10,6 +10,7 @@ private const val FBNEO_DAT =
         "FinalBurn%20Neo%20(ClrMame%20Pro%20XML,%20Arcade%20only).dat"
 private const val MAME_DAT =
     "https://raw.githubusercontent.com/libretro/mame2003-plus-libretro/master/metadata/mame2003-plus.xml"
+private const val DAT_BASE = "https://raw.githubusercontent.com/libretro/libretro-database/master/dat/"
 private val SYSTEMS =
     listOf(
         "Nintendo - Nintendo Entertainment System.rdb" to "nes",
@@ -60,6 +61,15 @@ fun main(args: Array<String>) {
         rows += parsed
     }
 
+    val wiiuFile = download(cache, "Nintendo - Wii U.dat", DAT_BASE + encodePath("Nintendo - Wii U.dat"))
+    val wiiuRows = DatGames.read(wiiuFile, "wiiu")
+    println("wiiu ${wiiuRows.size}")
+    rows += wiiuRows
+
+    val libraries = ThumbnailIndex.load(cache, ThumbnailIndex.folders.keys)
+    val covered = ThumbnailMatcher.assign(rows, libraries)
+    println("thumbnail paths ${covered.count { it.thumbnailPath != null }}")
+
     val fbneoSets = setNames(rows, "fbneo")
     val mameSets = setNames(rows, "mame2003plus")
     val overlap = fbneoSets.intersect(mameSets)
@@ -73,7 +83,7 @@ fun main(args: Array<String>) {
     println("Arcade member rows: ${members.size}")
 
     Class.forName("org.sqlite.JDBC")
-    val built = buildSlices(cache, rows)
+    val built = buildSlices(cache, covered)
     placeSlices(coresRoot, built)
     writeDetection(appRoot, rows, members)
     println("Wrote ${built.size} slices")

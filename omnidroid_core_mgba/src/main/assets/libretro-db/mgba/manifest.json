@@ -1,1 +1,1 @@
-{"schemaVersion":3,"slices":[{"sliceId":"gba","systems":["gba"],"file":"gba.sqlite.gz","sha256":"4daddfa5565fe45853b92b46f451da4543a420a48f52a28927c571c8e8d798ed","size":192764,"rows":3862}],"manifestSha":"7e9875c46d93ab3a48575790cfed8f86910923c583b2ab3fe1a7a1e34e662db0"}
+{"schemaVersion":4,"slices":[{"sliceId":"gba","systems":["gba"],"file":"gba.sqlite.gz","sha256":"cf77d42019b9fe9b324234cf6d7fa1c25e1cfbe744b9f8308895d23af2c1e439","size":224407,"rows":4038}],"manifestSha":"64b2cb0c99fdeef2e9a8d7ee537b9b0db03a02f0dd69c98eb9717502147c2e8d"}

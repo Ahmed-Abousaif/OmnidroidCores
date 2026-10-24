@@ -7,7 +7,7 @@ internal data class SliceSpec(
 )
 
 internal object SliceLayout {
-    const val SCHEMA_VERSION = 3
+    const val SCHEMA_VERSION = 4
 
     val slices =
         listOf(
@@ -38,6 +38,7 @@ internal object SliceLayout {
             SliceSpec("ps2", listOf("ps2"), listOf("armsx2")),
             SliceSpec("gamecube", listOf("gamecube"), listOf("dolphin")),
             SliceSpec("wii", listOf("wii"), listOf("dolphin")),
+            SliceSpec("wiiu", listOf("wiiu"), listOf("cemu")),
             SliceSpec("dreamcast", listOf("dreamcast"), listOf("flycast")),
         )
 

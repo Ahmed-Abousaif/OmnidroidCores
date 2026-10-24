@@ -17,6 +17,7 @@ internal data class GameRow(
     val code: String?,
     val size: Long?,
     val rawName: String? = name,
+    val thumbnailPath: String? = null,
 )
 
 internal object RdbGames {

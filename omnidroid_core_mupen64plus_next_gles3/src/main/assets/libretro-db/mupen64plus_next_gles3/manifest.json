@@ -1,1 +1,1 @@
-{"schemaVersion":3,"slices":[{"sliceId":"n64","systems":["n64"],"file":"n64.sqlite.gz","sha256":"3249ccaf389e8b29a9dde6de91c5f4d237061ccdb0e9c2eeffa0855d53b12468","size":73234,"rows":2308}],"manifestSha":"82cc254ef8e4226a39ee8588ff333a755ecfee56addb7b4f8004964bcacbfa57"}
+{"schemaVersion":4,"slices":[{"sliceId":"n64","systems":["n64"],"file":"n64.sqlite.gz","sha256":"99378dd8acd463223c3254fed0d971f17ffa729541a4e71925a5179663e11f5e","size":68441,"rows":1475}],"manifestSha":"4deca56557345e9c354b0eba167b68fb21beba4de542eac677e8502467ae247d"}

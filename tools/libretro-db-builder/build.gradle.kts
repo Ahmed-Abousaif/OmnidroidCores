@@ -10,6 +10,7 @@ java {
 
 dependencies {
     implementation("org.xerial:sqlite-jdbc:3.49.1.0")
+    implementation("com.google.code.gson:gson:2.11.0")
     testImplementation("junit:junit:4.13.2")
 }
 

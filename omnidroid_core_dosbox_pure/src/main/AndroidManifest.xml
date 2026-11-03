@@ -1,4 +1,3 @@
-
 <manifest xmlns:dist="http://schemas.android.com/apk/distribution"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
@@ -8,14 +7,12 @@
 
     <dist:module dist:title="@string/core_name_dosbox_pure">
         <dist:delivery>
-            
-<dist:on-demand />
-<dist:install-time>
-    <dist:conditions>
-        <dist:device-feature dist:name="android.software.leanback"/>
-    </dist:conditions>
-</dist:install-time>
-
+            <dist:on-demand />
+            <dist:install-time>
+                <dist:conditions>
+                    <dist:device-feature dist:name="android.software.leanback"/>
+                </dist:conditions>
+            </dist:install-time>
         </dist:delivery>
         <dist:fusing dist:include="true" />
     </dist:module>

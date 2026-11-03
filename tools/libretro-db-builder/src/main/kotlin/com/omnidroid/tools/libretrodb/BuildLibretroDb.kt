@@ -10,6 +10,8 @@ private const val FBNEO_DAT =
         "FinalBurn%20Neo%20(ClrMame%20Pro%20XML,%20Arcade%20only).dat"
 private const val MAME_DAT =
     "https://raw.githubusercontent.com/libretro/mame2003-plus-libretro/master/metadata/mame2003-plus.xml"
+private const val SWITCH_TITLES_JSON =
+    "https://raw.githubusercontent.com/blawar/titledb/master/US.en.json"
 private const val DAT_BASE = "https://raw.githubusercontent.com/libretro/libretro-database/master/dat/"
 private val SYSTEMS =
     listOf(
@@ -65,6 +67,11 @@ fun main(args: Array<String>) {
     val wiiuRows = DatGames.read(wiiuFile, "wiiu")
     println("wiiu ${wiiuRows.size}")
     rows += wiiuRows
+
+    val switchFile = download(cache, "Nintendo - Nintendo Switch.json", SWITCH_TITLES_JSON)
+    val switchRows = SwitchGames.read(switchFile, "switch")
+    println("switch ${switchRows.size}")
+    rows += switchRows
 
     val libraries = ThumbnailIndex.load(cache, ThumbnailIndex.folders.keys)
     val covered = ThumbnailMatcher.assign(rows, libraries)
@@ -256,7 +263,16 @@ private fun download(
         return destination
     }
     println("downloading $url")
-    URI(url).toURL().openStream().use { input ->
+    val connection = URI(url).toURL().openConnection() as java.net.HttpURLConnection
+    connection.setRequestProperty("User-Agent", "Mozilla/5.0")
+    connection.setRequestProperty("Accept-Encoding", "gzip")
+    val rawStream = connection.inputStream
+    val stream = if ("gzip".equals(connection.contentEncoding, ignoreCase = true)) {
+        java.util.zip.GZIPInputStream(rawStream)
+    } else {
+        rawStream
+    }
+    stream.use { input ->
         destination.outputStream().use { output -> input.copyTo(output) }
     }
     return destination

@@ -40,6 +40,7 @@ internal object SliceLayout {
             SliceSpec("wii", listOf("wii"), listOf("dolphin")),
             SliceSpec("wiiu", listOf("wiiu"), listOf("cemu")),
             SliceSpec("dreamcast", listOf("dreamcast"), listOf("flycast")),
+            SliceSpec("switch", listOf("switch"), listOf("switch")),
         )
 
     fun coreDirectory(coreName: String): String = "omnidroid_core_$coreName"

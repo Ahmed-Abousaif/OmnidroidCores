@@ -1,4 +1,3 @@
-
 plugins {
     id("com.android.dynamic-feature")
     id("kotlin-android")
@@ -7,12 +6,17 @@ plugins {
 
 android {
     namespace = "com.omnidroid.core.gambatte"
+
     defaultConfig {
         missingDimensionStrategy("opensource", "play")
         missingDimensionStrategy("cores", "dynamic")
     }
-    packagingOptions {
-        doNotStrip("*/*/*_libretro_android.so")
+
+    packaging {
+        jniLibs {
+            useLegacyPackaging = true
+            keepDebugSymbols += setOf("*/*/*_libretro_android.so")
+        }
     }
 }
 

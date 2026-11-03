@@ -6,12 +6,17 @@ plugins {
 
 android {
     namespace = "com.omnidroid.core.flycast"
+
     defaultConfig {
         missingDimensionStrategy("opensource", "play")
         missingDimensionStrategy("cores", "dynamic")
     }
-    packagingOptions {
-        doNotStrip("*/*/*_libretro_android.so")
+
+    packaging {
+        jniLibs {
+            useLegacyPackaging = true
+            keepDebugSymbols += setOf("*/*/*_libretro_android.so")
+        }
     }
 }
 

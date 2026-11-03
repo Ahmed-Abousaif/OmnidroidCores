@@ -23,5 +23,11 @@ class BundledDatabaseTest {
         val fileName = Regex(""""file":"([^"]+)"""").find(manifest)!!.groupValues[1]
         val bytes = File(cores, "omnidroid_core_gambatte/src/main/assets/libretro-db/gambatte/$fileName").readBytes()
         assertEquals(sha, SliceWriter.sha256(bytes))
+
+        val switchManifest = File(cores, "omnidroid_core_switch/src/main/assets/libretro-db/switch/manifest.json").readText()
+        val switchSha = Regex(""""sha256":"([0-9a-f]+)"""").find(switchManifest)!!.groupValues[1]
+        val switchFileName = Regex(""""file":"([^"]+)"""").find(switchManifest)!!.groupValues[1]
+        val switchBytes = File(cores, "omnidroid_core_switch/src/main/assets/libretro-db/switch/$switchFileName").readBytes()
+        assertEquals(switchSha, SliceWriter.sha256(switchBytes))
     }
 }

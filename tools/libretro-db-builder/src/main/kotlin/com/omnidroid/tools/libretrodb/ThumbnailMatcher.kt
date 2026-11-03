@@ -63,9 +63,14 @@ internal object ThumbnailMatcher {
     }
 
     fun matchKey(title: String): String {
+        // Humanize article-sorted stems first so
+        // "Legend of Zelda, The - The Wind Waker HD (...)" and
+        // "The Legend of Zelda: The Wind Waker HD (USA)" share a key.
+        // Without this, the middle "the" from ", The -" stays and boxarts miss.
+        val humanized = Keys.humanize(title) ?: title
         val words =
             PARENS
-                .replace(title, " ")
+                .replace(humanized, " ")
                 .lowercase()
                 .replace(NON_ALNUM, " ")
                 .trim()
@@ -92,7 +97,11 @@ internal object ThumbnailMatcher {
         for (stem in stems) {
             val have = tags(stem)
             if ((have intersect SKIP_TAGS).minus(wanted).isNotEmpty()) continue
-            val score = Score(wanted.intersect(have).size, -(have.minus(wanted).size), -stem.length)
+            val overlap = wanted.intersect(have).size
+            // Don't attach a USA boxart to a Japan/Europe DAT row just because
+            // the core title key matched after stripping region tags.
+            if (wanted.isNotEmpty() && overlap == 0) continue
+            val score = Score(overlap, -(have.minus(wanted).size), -stem.length)
             if (bestScore == null || score > bestScore) {
                 best = stem
                 bestScore = score

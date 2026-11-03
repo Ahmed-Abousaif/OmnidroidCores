@@ -64,6 +64,50 @@ class ThumbnailMatcherTest {
     }
 
     @Test
+    fun articleSortedSubtitleMatchesNaturalDatTitle() {
+        assertEquals(
+            ThumbnailMatcher.matchKey(
+                "Legend of Zelda, The - The Wind Waker HD (USA, Asia) (En,Fr,Es)",
+            ),
+            ThumbnailMatcher.matchKey("The Legend of Zelda: The Wind Waker HD (USA)"),
+        )
+    }
+
+    @Test
+    fun windWakerUsaBoxartIsChosenForUsaDatRow() {
+        val library =
+            ThumbnailLibrary(
+                boxarts =
+                    listOf(
+                        "Legend of Zelda, The - The Wind Waker HD (Europe, Australia) (En,Fr,De,Es,It)",
+                        "Legend of Zelda, The - The Wind Waker HD (USA, Asia) (En,Fr,Es)",
+                    ),
+                titles = emptyList(),
+                snaps = emptyList(),
+            )
+        assertEquals(
+            "Named_Boxarts/Legend of Zelda, The - The Wind Waker HD (USA, Asia) (En,Fr,Es).png",
+            library.pathFor("The Legend of Zelda: The Wind Waker HD (USA)"),
+        )
+    }
+
+    @Test
+    fun japanDatDoesNotInheritUsaBoxart() {
+        val library =
+            ThumbnailLibrary(
+                boxarts =
+                    listOf(
+                        "Legend of Zelda, The - The Wind Waker HD (USA, Asia) (En,Fr,Es)",
+                    ),
+                titles = emptyList(),
+                snaps = emptyList(),
+            )
+        assertNull(
+            library.pathFor("THE LEGEND OF ZELDA The Wind Waker HD (Trial) (Japan)"),
+        )
+    }
+
+    @Test
     fun titlesAreUsedWhenBoxartIsMissing() {
         val name = "Only A Title (USA)"
         val library =

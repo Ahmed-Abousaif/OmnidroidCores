@@ -2,11 +2,10 @@ package com.omnidroid.tools.libretrodb
 
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertNotNull
-import org.junit.Assert.assertTrue
+import org.junit.Assert.assertNull
 import org.junit.Rule
 import org.junit.Test
 import org.junit.rules.TemporaryFolder
-import java.io.File
 
 class SwitchGamesTest {
     @get:Rule
@@ -49,13 +48,13 @@ class SwitchGamesTest {
         assertEquals("Super Mario Odyssey", odyssey?.name)
         assertEquals("0100000000010000", odyssey?.serial)
         assertEquals("switch", odyssey?.system)
-        assertEquals("Named_Boxarts/Super Mario Odyssey.png", odyssey?.thumbnailPath)
+        assertNull(odyssey?.thumbnailPath)
         assertEquals(5683281920L, odyssey?.size)
 
         val zelda = rows.firstOrNull { it.serial == "0100152000022000" }
         assertNotNull(zelda)
         assertEquals("The Zelda: Breath of the Wild", zelda?.name)
-        assertEquals("Named_Boxarts/The Zelda: Breath of the Wild.png", zelda?.thumbnailPath)
+        assertNull(zelda?.thumbnailPath)
     }
 
     @Test

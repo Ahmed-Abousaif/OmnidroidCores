@@ -1,1 +1,1 @@
-{"schemaVersion":4,"slices":[{"sliceId":"atari7800","systems":["atari7800"],"file":"atari7800.sqlite.gz","sha256":"699be5f1a99bcfd0502a252d451d73cf21e3b840282777e0a3a37715539bf04c","size":19774,"rows":524}],"manifestSha":"5ade46c214028537fcecb66ce4aa427b14a267cbc3c950b982e7e142c7add494"}
+{"schemaVersion":4,"slices":[{"sliceId":"atari7800","systems":["atari7800"],"file":"atari7800.sqlite.gz","sha256":"6f429a2d25a10b87a158783e6d41bc6ccb9ec7c4ee2d57b7ba462d9cd5b2d616","size":19840,"rows":524}],"manifestSha":"e15026f2d21a0bebdb5bdd12488cfc5a8b17b685da78582300f98901e0d6cc30"}

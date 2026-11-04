@@ -72,7 +72,6 @@ internal object SwitchGames {
                     code = null,
                     size = entry.size?.takeIf { it > 0 },
                     rawName = if (entry.rawName != humanized) entry.rawName else null,
-                    thumbnailPath = "Named_Boxarts/$humanized.png",
                 )
             }
     }

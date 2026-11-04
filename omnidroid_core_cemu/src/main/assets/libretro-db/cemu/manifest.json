@@ -1,1 +1,1 @@
-{"schemaVersion":4,"slices":[{"sliceId":"wiiu","systems":["wiiu"],"file":"wiiu.sqlite.gz","sha256":"6c508ea847add5de1390025e82e7635eba46ac3dfa313deff38327d88f8f905c","size":104856,"rows":2860}],"manifestSha":"4e94475adc57005a22dde37ee3c8ac5ee6c9f3d3badb267ddeb42c8a42e2cd76"}
+{"schemaVersion":4,"slices":[{"sliceId":"wiiu","systems":["wiiu"],"file":"wiiu.sqlite.gz","sha256":"e528a8715f9cdf7c8a6e956e467572885fdbd2208419707547836039e45b53ab","size":106136,"rows":2860}],"manifestSha":"931cfd2f5fc074dc6ac4d245ff73c47541209a42e060212dbf1045fca36a49fd"}

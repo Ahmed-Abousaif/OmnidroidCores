@@ -1,1 +1,1 @@
-{"schemaVersion":4,"slices":[{"sliceId":"atari2600","systems":["atari2600"],"file":"atari2600.sqlite.gz","sha256":"6c15de66e75ce3e20582faff7540971807e0f754f238ffea564f35bd502fa51c","size":74293,"rows":1542}],"manifestSha":"9659374d1473e948a92a76bee658453e37f88244bccc4535445e89c1c45d7bed"}
+{"schemaVersion":4,"slices":[{"sliceId":"atari2600","systems":["atari2600"],"file":"atari2600.sqlite.gz","sha256":"84e5cbc599270ad95521993af3b63e533fd2c99f2926b72e88fa84f45a6d5c61","size":74181,"rows":1542}],"manifestSha":"b074cf13a0f350f5d36aa17801dcc853258c17121c627a69dd02b3149b2f1fe5"}

@@ -34,13 +34,15 @@ import zipfile
 from enum import Enum
 from typing import Dict, List, Optional, Set, Tuple
 
+from build_eden import build_eden
+
 ALL_ABIS: Tuple[str, ...] = ("arm64-v8a", "armeabi-v7a", "x86", "x86_64")
 BUILDBOT_BASE = "https://buildbot.libretro.com/nightly/android/latest"
 
 
 class SourceType(str, Enum):
     BUILDBOT = "buildbot"
-    EDEN_APK = "eden_apk"
+    EDEN_SOURCE = "eden_source"
     CEMU = "cemu"
     LOCAL = "local"
 
@@ -120,7 +122,7 @@ CORES: Dict[str, CoreSpec] = {
     "switch": CoreSpec(
         "switch",
         "Nintendo Switch (Eden)",
-        source=SourceType.EDEN_APK,
+        source=SourceType.EDEN_SOURCE,
         supported_abis=("arm64-v8a",),
         so_name="libyuzu-android.so",
         extra_libs=(
@@ -368,52 +370,6 @@ def download_github_release_asset(
     return False
 
 
-def download_eden_release_apk(
-    version: str,
-    cache_dir: pathlib.Path,
-) -> pathlib.Path:
-    """Downloads the Eden release APK if not already cached."""
-    cache_dir.mkdir(parents=True, exist_ok=True)
-    apk_path = cache_dir / f"Eden-Android-v{version}-standard.apk"
-    if apk_path.exists() and apk_path.stat().st_size > 10_000_000:
-        return apk_path
-
-    url = f"https://stable.eden-emu.dev/v{version}/Eden-Android-v{version}-standard.apk"
-    print(f"Downloading Eden v{version} APK from {url}...")
-    data = fetch_url(url)
-    with open(apk_path, "wb") as f:
-        f.write(data)
-    return apk_path
-
-
-def extract_eden_core(
-    spec: CoreSpec,
-    apk_path: pathlib.Path,
-    out_dir: pathlib.Path,
-) -> Tuple[bool, str]:
-    """Extracts libyuzu-android.so and adrenotools hooks from Eden APK."""
-    out_dir.mkdir(parents=True, exist_ok=True)
-    try:
-        with zipfile.ZipFile(apk_path) as z:
-            # 1. Main lib
-            main_lib_entry = "lib/arm64-v8a/libyuzu-android.so"
-            if main_lib_entry not in z.namelist():
-                return False, f"{main_lib_entry} missing in Eden APK"
-            data = z.read(main_lib_entry)
-            with open(out_dir / spec.target_so_name, "wb") as f:
-                f.write(data)
-
-            # 2. Adrenotools hook libraries
-            for hook in spec.extra_libs:
-                hook_entry = f"lib/arm64-v8a/{hook}"
-                if hook_entry in z.namelist():
-                    with open(out_dir / hook, "wb") as f:
-                        f.write(z.read(hook_entry))
-        return True, f"Extracted libyuzu-android.so ({len(data):,} bytes) + {len(spec.extra_libs)} hooks"
-    except Exception as e:
-        return False, f"Eden extraction error: {e}"
-
-
 def strip_binary_if_needed(so_path: pathlib.Path) -> bool:
     """Strips debug symbols if binary is larger than expected (> 35MB) and unstripped."""
     if not so_path.exists() or so_path.stat().st_size < 35_000_000:
@@ -568,11 +524,12 @@ def update_core(
     cores_root: pathlib.Path,
     selected_abis: Set[str],
     cache_dir: pathlib.Path,
-    eden_version: str,
+    eden_ref: str,
     cemu_tag: str,
     skip_buildbot: bool,
     scaffold_only: bool,
     dry_run: bool,
+    eden_jobs: int = 2,
 ) -> Dict[str, str]:
     """Updates a single core module: scaffolding, binaries, and dummy ABIs."""
     core_dir = cores_root / f"omnidroid_core_{spec.name}"
@@ -605,15 +562,17 @@ def update_core(
             ok, msg = download_libretro_buildbot_core(spec, abi, jni_dir / abi)
             results[abi] = f"OK ({msg})" if ok else f"FAIL ({msg})"
 
-    elif spec.source == SourceType.EDEN_APK:
+    elif spec.source == SourceType.EDEN_SOURCE:
         if "arm64-v8a" in selected_abis:
             if dry_run:
-                results["arm64-v8a"] = f"[DRY-RUN] Would extract Eden v{eden_version} for arm64-v8a"
+                results["arm64-v8a"] = f"[DRY-RUN] Would build Eden {eden_ref} from source for arm64-v8a"
             else:
                 try:
-                    apk_path = download_eden_release_apk(eden_version, cache_dir)
-                    ok, msg = extract_eden_core(spec, apk_path, jni_dir / "arm64-v8a")
-                    results["arm64-v8a"] = f"OK ({msg})" if ok else f"FAIL ({msg})"
+                    commit = build_eden(
+                        cores_root.parent / "modules/switch/upstream/eden",
+                        jni_dir / "arm64-v8a", ref=eden_ref, jobs=eden_jobs,
+                    )
+                    results["arm64-v8a"] = f"OK (Built Eden commit {commit})"
                 except Exception as e:
                     results["arm64-v8a"] = f"FAIL (Error: {e})"
 
@@ -659,6 +618,10 @@ def verify_cores(cores_root: pathlib.Path) -> bool:
             so = jni_dir / abi / spec.target_so_name
             if not so.exists() or so.stat().st_size == 0:
                 issues.append(f"missing {abi} binary")
+            for library_name in spec.extra_libs:
+                extra = jni_dir / abi / library_name
+                if not extra.exists() or extra.stat().st_size == 0:
+                    issues.append(f"missing {abi} {library_name}")
 
         for dummy_abi in spec.dummy_abis:
             dummy = jni_dir / dummy_abi / spec.target_so_name
@@ -702,10 +665,11 @@ def main() -> int:
         help="Maximum parallel worker threads (default: 8)",
     )
     parser.add_argument(
-        "--eden-version",
-        default="0.2.1",
-        help="Eden release version for Switch core (default: 0.2.1)",
+        "--eden-ref",
+        default="master",
+        help="Eden branch/tag/SHA to build (default: latest master; 'pinned' builds the checked-out commit)",
     )
+    parser.add_argument("--eden-jobs", type=int, default=2, help="Parallel Eden compiler jobs (default: 2)")
     parser.add_argument(
         "--cemu-tag",
         default="v0.1.0",
@@ -738,6 +702,8 @@ def main() -> int:
     )
 
     args = parser.parse_args()
+    if args.jobs < 1 or args.eden_jobs < 1:
+        parser.error("--jobs and --eden-jobs must be positive")
 
     # Determine paths
     script_dir = pathlib.Path(__file__).resolve().parent
@@ -794,13 +760,15 @@ def main() -> int:
             cores_root=cores_root,
             selected_abis=selected_abis,
             cache_dir=cache_dir,
-            eden_version=args.eden_version,
+            eden_ref=args.eden_ref,
+            eden_jobs=args.eden_jobs,
             cemu_tag=args.cemu_tag,
             skip_buildbot=args.skip_buildbot,
             scaffold_only=args.scaffold_only,
             dry_run=args.dry_run,
         )
 
+    failed = False
     with concurrent.futures.ThreadPoolExecutor(max_workers=args.jobs) as executor:
         future_map = {executor.submit(process_core, spec): spec for spec in target_cores}
         for future in concurrent.futures.as_completed(future_map):
@@ -808,11 +776,12 @@ def main() -> int:
             print(f"[{name}]")
             for key, val in results.items():
                 print(f"   {key:<12}: {val}")
+                failed = failed or val.startswith("FAIL")
 
     elapsed = time.time() - start_time
     print("-" * 60)
     print(f"All operations finished in {elapsed:.1f}s.")
-    return 0
+    return 1 if failed else 0
 
 
 if __name__ == "__main__":

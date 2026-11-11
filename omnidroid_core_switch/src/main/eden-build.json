@@ -1,0 +1,15 @@
+{
+  "repository": "https://git.eden-emu.dev/eden-emu/eden.git",
+  "commit": "cf654052c416f9e7c80cef0a7d321476b1c52f99",
+  "abi": "arm64-v8a",
+  "ndk": "30.0.16248370",
+  "android_api": 26,
+  "configuration": "Release",
+  "sha256": {
+    "libyuzu-android.so": "f9f0a2e55f14601eb106bd60d1a7cce5bdb7c0553881e87753ab5a1f1a463f6c",
+    "libhook_impl.so": "60621eafacba2c1b6258f3f91f69836b2c8637b5d86b5bd40c558e592ade9f58",
+    "libmain_hook.so": "d0a07fc48184940dc20465364725cd848f65003492c8683ca156673aadff5c21",
+    "libgsl_alloc_hook.so": "918d5e3cb03c1e488990693a81c335fe1784bab9d9c1d6a2d76ad15e34df5d65",
+    "libfile_redirect_hook.so": "11b120ff5574eaa4354e864e5b1f446376bce151caddd2332afed1b1f75ab908"
+  }
+}

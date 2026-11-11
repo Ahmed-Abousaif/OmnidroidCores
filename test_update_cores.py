@@ -2,6 +2,7 @@ import pathlib
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch
 
 sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
 
@@ -80,7 +81,8 @@ class TestUpdateCores(unittest.TestCase):
                 self.assertTrue(dummy.exists())
                 self.assertEqual(dummy.stat().st_size, 0)
 
-    def test_sync_cemu_core_local_candidate(self):
+    @patch("update_cores.download_github_release_asset", return_value=False)
+    def test_sync_cemu_core_local_candidate(self, _download):
         with tempfile.TemporaryDirectory() as tmp_dir:
             cores_root = pathlib.Path(tmp_dir)
             out_dir = cores_root / "out"

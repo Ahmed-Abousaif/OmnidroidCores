@@ -1,15 +1,15 @@
 {
   "repository": "https://git.eden-emu.dev/eden-emu/eden.git",
-  "commit": "cf654052c416f9e7c80cef0a7d321476b1c52f99",
+  "commit": "4a2c923419da30bc272df6dbeb2866dd1b59cade",
   "abi": "arm64-v8a",
   "ndk": "30.0.16248370",
   "android_api": 26,
   "configuration": "Release",
   "sha256": {
-    "libyuzu-android.so": "f9f0a2e55f14601eb106bd60d1a7cce5bdb7c0553881e87753ab5a1f1a463f6c",
-    "libhook_impl.so": "60621eafacba2c1b6258f3f91f69836b2c8637b5d86b5bd40c558e592ade9f58",
-    "libmain_hook.so": "d0a07fc48184940dc20465364725cd848f65003492c8683ca156673aadff5c21",
-    "libgsl_alloc_hook.so": "918d5e3cb03c1e488990693a81c335fe1784bab9d9c1d6a2d76ad15e34df5d65",
-    "libfile_redirect_hook.so": "11b120ff5574eaa4354e864e5b1f446376bce151caddd2332afed1b1f75ab908"
+    "libyuzu-android.so": "fc423d662e91873bd47195b181bb2e19fb63613da53894eacd796aa4b42cfc8d",
+    "libhook_impl.so": "6e61e66dcfc2d5e1de15c9c4dfcd385f9949741daad75c4fb8f5ab79bb5e1150",
+    "libmain_hook.so": "937ab24f421ca4d8b8cd5e78552c55e8a33f3c86b86381755d2602b0a599cb42",
+    "libgsl_alloc_hook.so": "2770157c0dcf2beab91fdaf81f32306ad6c6d17f1c134f72a8b719b7bef82ce4",
+    "libfile_redirect_hook.so": "1c40df89fe2e70eae1e19c8526a74430e3dbf3b47b4067115abbcc8323a78895"
   }
 }

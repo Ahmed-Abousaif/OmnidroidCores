@@ -216,7 +216,7 @@ dependencies {{
 # ---------------------------------------------------------------------------
 def fetch_url(url: str, retries: int = 3, backoff: float = 1.0) -> bytes:
     headers = {
-        "User-Agent": "Omnidroid-Core-Updater/2.6.0 (Android Emulation Core Sync)",
+        "User-Agent": "Omnidroid-Core-Updater/3.0.0 (Android Emulation Core Sync)",
         "Accept-Encoding": "gzip",
     }
     req = urllib.request.Request(url, headers=headers)
@@ -300,7 +300,7 @@ def download_github_release_asset(
         else f"https://api.github.com/repos/{repo}/releases/latest"
     )
     headers = {
-        "User-Agent": "Omnidroid-Core-Updater/2.6.0 (Android Emulation Core Sync)",
+        "User-Agent": "Omnidroid-Core-Updater/3.0.0 (Android Emulation Core Sync)",
         "Accept": "application/vnd.github.v3+json",
     }
     if token:

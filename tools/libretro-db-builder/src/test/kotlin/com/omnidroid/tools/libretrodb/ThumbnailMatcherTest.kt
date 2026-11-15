@@ -7,6 +7,15 @@ import java.io.File
 
 class ThumbnailMatcherTest {
     @Test
+    fun fuzzyTiesKeepTheOriginalCandidateOrder() {
+        val candidates = listOf("Alpha Beta Gamma (USA)", "Alpha Beta-Gamma (USA)")
+        listOf(candidates, candidates.reversed()).forEach { stems ->
+            val library = ThumbnailLibrary(stems, emptyList(), emptyList())
+            assertEquals("Named_Boxarts/${stems.first()}.png", library.pathFor("Alpha Beta Gama (USA)"))
+        }
+    }
+
+    @Test
     fun exclamationMarkMatchesTheThumbnailFilename() {
         val name = "Yu-Gi-Oh! The Duelists of the Roses (USA)"
         val library =

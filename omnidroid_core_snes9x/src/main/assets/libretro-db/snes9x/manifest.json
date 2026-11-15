@@ -1,1 +1,1 @@
-{"schemaVersion":4,"slices":[{"sliceId":"snes","systems":["snes"],"file":"snes.sqlite.gz","sha256":"48c5eea53bdabc53547ade3b5e0b70f41d1618db2981c7a61345a2fdb10d635f","size":355785,"rows":7696}],"manifestSha":"68ad345b04d2aec7003932f4d71dafcf887d1a98f80befafd7efe1c6c65f5cba"}
+{"schemaVersion":4,"slices":[{"sliceId":"snes","systems":["snes"],"file":"snes.sqlite.gz","sha256":"daabb5ccdc1a471995db65407552430cc8a81993f1a43dd85a92a46663ccd996","size":321422,"rows":7000}],"manifestSha":"f63e10db86d72a44c05d861eebe0c13eed601cbc31308b799b6fc0d4294ce186"}

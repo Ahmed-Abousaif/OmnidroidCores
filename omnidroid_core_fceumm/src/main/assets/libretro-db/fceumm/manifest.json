@@ -1,1 +1,1 @@
-{"schemaVersion":4,"slices":[{"sliceId":"nes","systems":["nes"],"file":"nes.sqlite.gz","sha256":"0403f0118f462842ecbd198ce31157960cf9cb9994934b5f3aec3f8db865efa3","size":1023578,"rows":27541}],"manifestSha":"8eb9c7cf12153fbd36395407d9792d755e8e2047407158c51a12f6739cdf6dcf"}
+{"schemaVersion":4,"slices":[{"sliceId":"nes","systems":["nes"],"file":"nes.sqlite.gz","sha256":"4bf3fa5a4fc3f1fb020826a30b0f2d3c0a5a1b07ccf3d2eeda507b17f7954a56","size":952809,"rows":25216}],"manifestSha":"b2c14d43a7b56922da66f5c379fedf4485dc1fa7f8f4bbc9a89dee006d6bb707"}

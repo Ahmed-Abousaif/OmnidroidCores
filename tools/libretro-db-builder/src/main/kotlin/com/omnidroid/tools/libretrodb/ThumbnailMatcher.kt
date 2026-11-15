@@ -84,12 +84,14 @@ internal class ThumbnailLibrary(
         val exact = HashMap<String, String>(stems.size)
         val byKey = HashMap<String, MutableList<String>>()
         val bySortedKey = HashMap<String, MutableList<String>>()
-        stems.forEach { stem ->
+        val prepared = stems.map(ThumbnailMatcher::prepareStem)
+        prepared.forEach { candidate ->
+            val stem = candidate.name
             exact.putIfAbsent(stem, stem)
-            byKey.getOrPut(ThumbnailMatcher.matchKey(stem)) { ArrayList() }.add(stem)
-            bySortedKey.getOrPut(ThumbnailMatcher.sortedMatchKey(stem)) { ArrayList() }.add(stem)
+            byKey.getOrPut(candidate.tokens.joinToString(" ")) { ArrayList() }.add(stem)
+            bySortedKey.getOrPut(candidate.tokens.sorted().joinToString(" ")) { ArrayList() }.add(stem)
         }
-        return CategoryIndex(folder, exact, byKey, bySortedKey, stems)
+        return CategoryIndex(folder, exact, byKey, bySortedKey, prepared)
     }
 
     private class CategoryIndex(
@@ -97,7 +99,7 @@ internal class ThumbnailLibrary(
         val exact: Map<String, String>,
         val byKey: Map<String, List<String>>,
         val bySortedKey: Map<String, List<String>>,
-        val stems: List<String>,
+        val stems: List<ThumbnailMatcher.FuzzyStem>,
     )
 }
 
@@ -145,10 +147,11 @@ internal object ThumbnailMatcher {
         rows: List<GameRow>,
         libraries: Map<String, ThumbnailLibrary>,
     ): List<GameRow> {
-        return rows.map { row ->
-            val library = libraries[row.system] ?: return@map row
-            val name = row.rawName ?: row.name ?: return@map row
-            val path = library.pathFor(name) ?: return@map row
+        return rows.mapIndexed { index, row ->
+            if (index % 5_000 == 0) println("Matching thumbnails: $index/${rows.size}")
+            val library = libraries[row.system] ?: return@mapIndexed row
+            val name = row.rawName ?: row.name ?: return@mapIndexed row
+            val path = library.pathFor(name) ?: return@mapIndexed row
             row.copy(thumbnailPath = path)
         }
     }
@@ -214,10 +217,22 @@ internal object ThumbnailMatcher {
         return variants.toList()
     }
 
+    data class FuzzyStem(
+        val name: String,
+        val tags: Set<String>,
+        val regions: Set<String>,
+        val tokens: List<String>,
+    )
+
+    fun prepareStem(name: String): FuzzyStem {
+        val tags = tags(name)
+        return FuzzyStem(name, tags, tags.intersect(REGION_TAGS), tokens(name))
+    }
+
     fun chooseFuzzy(
         databaseName: String,
         queryVariants: List<List<String>>,
-        stems: List<String>,
+        stems: List<FuzzyStem>,
         requireSameRegion: Boolean = true,
     ): String? {
         if (stems.isEmpty() || queryVariants.isEmpty()) return null
@@ -225,13 +240,13 @@ internal object ThumbnailMatcher {
         val wantedRegions = wanted.intersect(REGION_TAGS)
         var best: String? = null
         var bestScore: FuzzyScore? = null
-        for (stem in stems) {
-            val have = tags(stem)
-            if ((have intersect SKIP_TAGS).minus(wanted).isNotEmpty()) continue
-            val haveRegions = have.intersect(REGION_TAGS)
-            val sameRegion = wantedRegions.isEmpty() || wantedRegions.intersect(haveRegions).isNotEmpty()
+        for (candidate in stems) {
+            val stem = candidate.name
+            val have = candidate.tags
+            if (have.any { it in SKIP_TAGS && it !in wanted }) continue
+            val sameRegion = wantedRegions.isEmpty() || wantedRegions.any { it in candidate.regions }
             if (requireSameRegion && wantedRegions.isNotEmpty() && !sameRegion) continue
-            val stemTokens = tokens(stem)
+            val stemTokens = candidate.tokens
             if (stemTokens.isEmpty()) continue
             for (query in queryVariants) {
                 val soft = softOverlap(query, stemTokens)
@@ -285,7 +300,7 @@ internal object ThumbnailMatcher {
      */
     fun chooseFuzzyFranchise(
         databaseName: String,
-        stems: List<String>,
+        stems: List<FuzzyStem>,
     ): String? {
         val query = tokens(databaseName)
         if (query.isEmpty()) return null
@@ -295,12 +310,12 @@ internal object ThumbnailMatcher {
         val wantedRegions = wanted.intersect(REGION_TAGS)
         if (wantedRegions.isEmpty()) return null
         val candidates =
-            stems.mapNotNull { stem ->
-                val have = tags(stem)
-                if ((have intersect SKIP_TAGS).minus(wanted).isNotEmpty()) return@mapNotNull null
-                val haveRegions = have.intersect(REGION_TAGS)
-                if (wantedRegions.intersect(haveRegions).isEmpty()) return@mapNotNull null
-                val stemTokens = tokens(stem)
+            stems.mapNotNull { candidate ->
+                val stem = candidate.name
+                val have = candidate.tags
+                if (have.any { it in SKIP_TAGS && it !in wanted }) return@mapNotNull null
+                if (wantedRegions.none { it in candidate.regions }) return@mapNotNull null
+                val stemTokens = candidate.tokens
                 if (stemTokens.isEmpty() || stemTokens.first() != franchise) return@mapNotNull null
                 stem to stemTokens
             }

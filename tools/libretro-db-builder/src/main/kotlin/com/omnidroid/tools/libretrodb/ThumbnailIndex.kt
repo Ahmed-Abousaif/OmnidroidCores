@@ -140,13 +140,7 @@ internal object ThumbnailIndex {
         var pause = 2_000L
         repeat(4) { attempt ->
             println("downloading $url")
-            val request =
-                HttpRequest.newBuilder(URI(url))
-                    .header("User-Agent", "omnidroid-libretro-db")
-                    .header("Accept", "application/vnd.github+json")
-                    .GET()
-                    .build()
-            val response = CLIENT.send(request, HttpResponse.BodyHandlers.ofString())
+            val response = CLIENT.send(request(url), HttpResponse.BodyHandlers.ofString())
             if (response.statusCode() == 200 || response.statusCode() == 404) {
                 return HttpBody(response.statusCode(), response.body())
             }
@@ -158,6 +152,21 @@ internal object ThumbnailIndex {
             pause *= 2
         }
         return null
+    }
+
+    internal fun request(
+        url: String,
+        token: String? = System.getenv("GITHUB_TOKEN"),
+    ): HttpRequest {
+        val uri = URI(url)
+        val builder =
+            HttpRequest.newBuilder(uri)
+                .header("User-Agent", "omnidroid-libretro-db")
+                .header("Accept", "application/vnd.github+json")
+        if (uri.scheme == "https" && uri.host == "api.github.com" && !token.isNullOrBlank()) {
+            builder.header("Authorization", "Bearer $token")
+        }
+        return builder.GET().build()
     }
 
     private fun jsonEscape(value: String): String =

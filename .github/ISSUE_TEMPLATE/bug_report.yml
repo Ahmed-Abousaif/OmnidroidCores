@@ -1,0 +1,42 @@
+name: Bug report
+description: Report a reproducible problem in OmnidroidCores
+title: '[Bug]: '
+labels:
+- bug
+body:
+- type: textarea
+  id: description
+  attributes:
+    label: Actual and expected behavior
+    description: Describe what happened and what you expected.
+  validations:
+    required: true
+- type: textarea
+  id: steps
+  attributes:
+    label: Steps to reproduce
+    description: Provide a minimal example or exact steps. Include a regression range
+      if known.
+  validations:
+    required: true
+- type: input
+  id: version
+  attributes:
+    label: Core release/tag or Git commit
+  validations:
+    required: true
+- type: textarea
+  id: environment
+  attributes:
+    label: Environment
+    description: Host OS or Android device, ABI, core/system name, frontend version,
+      and build/update method.
+  validations:
+    required: true
+- type: textarea
+  id: logs
+  attributes:
+    label: Relevant logs or minimal code
+    description: Remove credentials and personal information. Do not attach game files,
+      firmware, BIOS, or console keys.
+    render: shell

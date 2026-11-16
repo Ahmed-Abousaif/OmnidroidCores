@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+- name: Questions and design discussions
+  url: https://github.com/Ahmed-Abousaif/OmnidroidCores/discussions
+  about: Use Discussions for support questions and design proposals.

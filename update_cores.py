@@ -35,6 +35,7 @@ from enum import Enum
 from typing import Dict, List, Optional, Set, Tuple
 
 from build_eden import build_eden
+from build_armsx3 import build as build_armsx3
 
 ALL_ABIS: Tuple[str, ...] = ("arm64-v8a", "armeabi-v7a", "x86", "x86_64")
 BUILDBOT_BASE = "https://buildbot.libretro.com/nightly/android/latest"
@@ -43,6 +44,7 @@ BUILDBOT_BASE = "https://buildbot.libretro.com/nightly/android/latest"
 class SourceType(str, Enum):
     BUILDBOT = "buildbot"
     EDEN_SOURCE = "eden_source"
+    ARMSX3_SOURCE = "armsx3_source"
     CEMU = "cemu"
     LOCAL = "local"
 
@@ -138,6 +140,11 @@ CORES: Dict[str, CoreSpec] = {
     "genesis_plus_gx": CoreSpec("genesis_plus_gx", "Sega Genesis / Master System / Game Gear / CD"),
     "flycast": CoreSpec("flycast", "Sega Dreamcast"),
     # Sony
+    "armsx3": CoreSpec(
+        "armsx3", "PlayStation 3 (ARMSX3)", source=SourceType.ARMSX3_SOURCE,
+        supported_abis=("arm64-v8a",), so_name="libomnidroid-armsx3.so",
+        keep_debug_symbols="*/*/libomnidroid-armsx3.so",
+    ),
     "pcsx_rearmed": CoreSpec("pcsx_rearmed", "Sony PlayStation 1"),
     "ppsspp": CoreSpec("ppsspp", "Sony PlayStation Portable (PSP)"),
     "armsx2": CoreSpec(
@@ -575,6 +582,17 @@ def update_core(
                     results["arm64-v8a"] = f"OK (Built Eden commit {commit})"
                 except Exception as e:
                     results["arm64-v8a"] = f"FAIL (Error: {e})"
+
+    elif spec.source == SourceType.ARMSX3_SOURCE:
+        if "arm64-v8a" in selected_abis:
+            if dry_run:
+                results["arm64-v8a"] = "[DRY-RUN] Would build pinned ARMSX3 with integrated JNI"
+            else:
+                try:
+                    build_armsx3(output=jni_dir / "arm64-v8a", jobs=eden_jobs)
+                    results["arm64-v8a"] = "OK (Built pinned ARMSX3 native library)"
+                except Exception as error:
+                    results["arm64-v8a"] = f"FAIL (Error: {error})"
 
     elif spec.source == SourceType.CEMU:
         if "arm64-v8a" in selected_abis:

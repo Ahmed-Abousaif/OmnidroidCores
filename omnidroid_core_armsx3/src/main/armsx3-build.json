@@ -1,0 +1,12 @@
+{
+  "repository": "https://github.com/ARMSX2/ARMSX3",
+  "commit": "64175ad2e625ad02b330bf90a9bbc21385b3c379",
+  "ndk": "29.0.14206865",
+  "android_api": 33,
+  "abi": "arm64-v8a",
+  "library": "libomnidroid-armsx3.so",
+  "sha256": "7d2f94078aba84c6b82be38caa100c0c1d581eca8962359bcdd8ed65e7060511",
+  "profile": "omnidroid-engine-only",
+  "host_abi_version": 1,
+  "packaging": "single-library"
+}

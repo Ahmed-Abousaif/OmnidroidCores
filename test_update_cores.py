@@ -13,14 +13,14 @@ from update_cores import (
 
 
 class TestUpdateCores(unittest.TestCase):
-    def test_registry_contains_all_25_cores(self):
-        self.assertEqual(len(CORES), 25)
+    def test_registry_contains_all_26_cores(self):
+        self.assertEqual(len(CORES), 26)
         for name in [
             "stella", "fceumm", "snes9x", "gambatte", "mgba", "mupen64plus_next_gles3",
             "dolphin", "melondsds", "citra", "azahar", "cemu", "switch", "genesis_plus_gx",
             "flycast", "pcsx_rearmed", "ppsspp", "armsx2", "fbneo", "mame2003_plus",
             "mednafen_pce_fast", "mednafen_ngp", "mednafen_wswan", "dosbox_pure",
-            "handy", "prosystem",
+            "handy", "prosystem", "armsx3",
         ]:
             self.assertIn(name, CORES)
 
@@ -38,6 +38,12 @@ class TestUpdateCores(unittest.TestCase):
         cemu = CORES["cemu"]
         self.assertEqual(cemu.target_so_name, "libcemu_libretro_android.so")
         self.assertEqual(cemu.dummy_abis, ("armeabi-v7a", "x86", "x86_64"))
+
+        armsx3 = CORES["armsx3"]
+        self.assertEqual(armsx3.source, SourceType.ARMSX3_SOURCE)
+        self.assertEqual(armsx3.target_so_name, "libomnidroid-armsx3.so")
+        self.assertEqual(armsx3.extra_libs, ())
+        self.assertEqual(armsx3.supported_abis, ("arm64-v8a",))
 
         melondsds = CORES["melondsds"]
         self.assertEqual(melondsds.dummy_abis, ("x86",))

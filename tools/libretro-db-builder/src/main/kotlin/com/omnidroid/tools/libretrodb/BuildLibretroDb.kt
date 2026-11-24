@@ -90,7 +90,11 @@ fun main(args: Array<String>) {
     println("Arcade member rows: ${members.size}")
 
     Class.forName("org.sqlite.JDBC")
-    val built = buildSlices(cache, covered)
+    val catalogIndex = args.indexOf("--catalog-origin")
+    val catalogOrigin = if (catalogIndex >= 0) args.getOrNull(catalogIndex + 1) else System.getenv("OMNIDROID_CATALOG_ORIGIN")
+    val seeds = CatalogSeeds.load(catalogOrigin, covered.map { it.system }.distinct())
+    println("Verified catalog seeds ${seeds.size}")
+    val built = buildSlices(cache, covered, seeds)
     placeSlices(coresRoot, built)
     writeDetection(appRoot, rows, members)
     println("Wrote ${built.size} slices")
@@ -110,6 +114,7 @@ private fun setNames(
 private fun buildSlices(
     cache: File,
     rows: List<GameRow>,
+    seeds: List<CatalogSeedRow> = emptyList(),
 ): List<SliceFile> {
     val scratch = File(cache, "slices")
     scratch.mkdirs()
@@ -119,7 +124,7 @@ private fun buildSlices(
                 .filter { it.system in spec.systems }
                 .distinctBy { listOf(it.system, it.name, it.crc32, it.serial, it.code, it.romBase) }
         val sqlite = File(scratch, "${spec.id}.sqlite")
-        SliceWriter.writeGames(sqlite, selected)
+        SliceWriter.writeGames(sqlite, selected, seeds.filter { it.system in spec.systems })
         val gzip = SliceWriter.gzip(sqlite)
         sqlite.delete()
         println("${spec.id} ${selected.size} rows, ${gzip.size} bytes")

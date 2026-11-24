@@ -17,6 +17,7 @@ internal object SliceWriter {
     fun writeGames(
         file: File,
         rows: List<GameRow>,
+        catalogSeeds: List<CatalogSeedRow> = emptyList(),
     ) {
         if (file.exists()) file.delete()
         file.parentFile?.mkdirs()
@@ -66,6 +67,16 @@ internal object SliceWriter {
                 insert.addBatch()
             }
             insert.executeBatch()
+            statement.execute("CREATE TABLE catalog_seeds (system TEXT NOT NULL, lookupKey TEXT NOT NULL, payload TEXT NOT NULL, PRIMARY KEY(system, lookupKey))")
+            connection.prepareStatement("INSERT INTO catalog_seeds (system, lookupKey, payload) VALUES (?, ?, ?)").use { seedInsert ->
+                catalogSeeds.distinctBy { it.system to it.lookupKey }.forEach { seed ->
+                    seedInsert.setString(1, seed.system)
+                    seedInsert.setString(2, seed.lookupKey)
+                    seedInsert.setString(3, seed.payload)
+                    seedInsert.addBatch()
+                }
+                seedInsert.executeBatch()
+            }
             connection.commit()
             connection.autoCommit = true
             connection.createStatement().execute("VACUUM")

@@ -138,6 +138,7 @@ CORES: Dict[str, CoreSpec] = {
     ),
     # Sega
     "genesis_plus_gx": CoreSpec("genesis_plus_gx", "Sega Genesis / Master System / Game Gear / CD"),
+    "picodrive": CoreSpec("picodrive", "Sega Genesis / Sega CD / 32X"),
     "flycast": CoreSpec("flycast", "Sega Dreamcast"),
     # Sony
     "armsx3": CoreSpec(

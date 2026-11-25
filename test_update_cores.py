@@ -13,8 +13,8 @@ from update_cores import (
 
 
 class TestUpdateCores(unittest.TestCase):
-    def test_registry_contains_all_26_cores(self):
-        self.assertEqual(len(CORES), 26)
+    def test_registry_contains_all_27_cores(self):
+        self.assertEqual(len(CORES), 27)
         for name in [
             "stella", "fceumm", "snes9x", "gambatte", "mgba", "mupen64plus_next_gles3",
             "dolphin", "melondsds", "citra", "azahar", "cemu", "switch", "genesis_plus_gx",

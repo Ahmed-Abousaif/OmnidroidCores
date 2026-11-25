@@ -145,11 +145,12 @@ private fun placeSlices(
     }
     byCore.forEach { (core, coreSlices) ->
         SliceWriter.place(coresRoot, core, coreSlices.sortedBy { it.spec.id })
+        if (core == "picodrive") SliceWriter.place(coresRoot, core, coreSlices.sortedBy { it.spec.id }, bundled = true)
     }
     val bundled = File(coresRoot, "bundled-cores/src/main/assets/libretro-db/bundled")
     bundled.mkdirs()
     val distinct = slices.sortedBy { it.spec.id }
-    distinct.forEach { File(bundled, "${it.spec.id}.sqlite.gz").writeBytes(it.gzip) }
+    distinct.forEach { File(bundled, it.fileName).writeBytes(it.gzip) }
     File(bundled, "manifest.json").writeText(SliceWriter.manifest(distinct))
 }
 
@@ -244,7 +245,7 @@ private fun writeDetection(
         markerInsert.executeBatch()
 
         val cartInsert = connection.prepareStatement("INSERT INTO bin_carts (crc, system) VALUES (?, ?)")
-        rows.filter { it.system == "atari7800" || it.system == "pce" }.forEach { row ->
+        rows.filter { it.system in setOf("atari7800", "pce", "32x") }.forEach { row ->
             val crc = row.crc32 ?: return@forEach
             cartInsert.setString(1, crc)
             cartInsert.setString(2, row.system)

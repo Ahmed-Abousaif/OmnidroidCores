@@ -11,6 +11,7 @@ internal data class SliceFile(
     val gzip: ByteArray,
     val sha256: String,
     val rows: Int,
+    val fileName: String = "${spec.id}.sqlite." + if (spec.id == "32x") "gzip" else "gz",
 )
 
 internal object SliceWriter {
@@ -120,8 +121,8 @@ internal object SliceWriter {
                         append('"')
                     }
                     append("],\"file\":\"")
-                    append(slice.spec.id)
-                    append(".sqlite.gz\",\"sha256\":\"")
+                    append(slice.fileName)
+                    append("\",\"sha256\":\"")
                     append(slice.sha256)
                     append("\",\"size\":")
                     append(slice.gzip.size)
@@ -139,12 +140,19 @@ internal object SliceWriter {
         coresRoot: File,
         coreName: String,
         slices: List<SliceFile>,
+        bundled: Boolean = false,
     ) {
-        val dir = File(coresRoot, "${SliceLayout.coreDirectory(coreName)}/src/main/assets/libretro-db/$coreName")
+        val module = if (bundled) "bundled-cores" else SliceLayout.coreDirectory(coreName)
+        val dir = File(coresRoot, "$module/src/main/assets/libretro-db/$coreName")
         dir.mkdirs()
-        slices.forEach { slice ->
-            File(dir, "${slice.spec.id}.sqlite.gz").writeBytes(slice.gzip)
+        // Android expands .gz assets and removes the suffix; keep new core assets compressed
+        // so their names and bytes continue to match the verified manifest at runtime.
+        val packaged = slices.map { if (coreName == "picodrive") it.copy(fileName = "${it.spec.id}.sqlite.gzip") else it }
+        packaged.forEach { slice ->
+            File(dir, slice.fileName).writeBytes(slice.gzip)
+            val previous = File(dir, "${slice.spec.id}.sqlite.gz")
+            if (previous.name != slice.fileName) previous.delete()
         }
-        File(dir, "manifest.json").writeText(manifest(slices))
+        File(dir, "manifest.json").writeText(manifest(packaged))
     }
 }

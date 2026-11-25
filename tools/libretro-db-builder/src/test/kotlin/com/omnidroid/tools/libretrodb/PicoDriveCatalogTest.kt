@@ -23,11 +23,11 @@ class PicoDriveCatalogTest {
             assertEquals(entry.get("sha256").asString, SliceWriter.sha256(file.readBytes()))
         }
         listOf("md", "scd").forEach { id ->
-            assertArrayEquals(File(gx, "$id.sqlite.gz").readBytes(), File(pico, "$id.sqlite.gz").readBytes())
+            assertArrayEquals(File(gx, "$id.sqlite.gz").readBytes(), File(pico, "$id.sqlite.gzip").readBytes())
         }
         val unpacked = File.createTempFile("sega32x-catalog", ".sqlite")
         try {
-            GZIPInputStream(File(pico, "32x.sqlite.gz").inputStream()).use { input ->
+            GZIPInputStream(File(pico, "32x.sqlite.gzip").inputStream()).use { input ->
                 unpacked.outputStream().use { input.copyTo(it) }
             }
             DriverManager.getConnection("jdbc:sqlite:${unpacked.absolutePath}").use { database ->
@@ -42,6 +42,10 @@ class PicoDriveCatalogTest {
             }
         } finally {
             unpacked.delete()
+        }
+        val bundled = File(cores, "bundled-cores/src/main/assets/libretro-db/picodrive")
+        listOf("manifest.json", "32x.sqlite.gzip", "md.sqlite.gzip", "scd.sqlite.gzip").forEach { name ->
+            assertArrayEquals(File(pico, name).readBytes(), File(bundled, name).readBytes())
         }
     }
 }

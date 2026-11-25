@@ -32,10 +32,12 @@ object BuildSega32x {
         val shared = readSlices(genesis).filter { it.spec.id in setOf("md", "scd") }
         check(shared.size == 2)
         SliceWriter.place(cores, "picodrive", (shared + added).sortedBy { it.spec.id })
+        SliceWriter.place(cores, "picodrive", (shared + added).sortedBy { it.spec.id }, bundled = true)
 
         val bundled = File(cores, "bundled-cores/src/main/assets/libretro-db/bundled")
         val combined = (readSlices(bundled).filterNot { it.spec.id == "32x" } + added).sortedBy { it.spec.id }
-        File(bundled, "32x.sqlite.gz").writeBytes(gzip)
+        File(bundled, added.fileName).writeBytes(gzip)
+        File(bundled, "32x.sqlite.gz").delete()
         File(bundled, "manifest.json").writeText(SliceWriter.manifest(combined))
 
         val detection = File(app, "omnidroid-metadata-libretro-db/src/main/assets/libretro-detect.sqlite")
@@ -66,6 +68,7 @@ object BuildSega32x {
                 bytes,
                 SliceWriter.sha256(bytes),
                 entry.get("rows").asInt,
+                entry.get("file").asString,
             )
         }
     }

@@ -28,3 +28,13 @@ tasks.named<JavaExec>("run") {
         layout.projectDirectory.dir("cache").asFile.absolutePath,
     )
 }
+
+tasks.register<JavaExec>("buildSega32x") {
+    classpath = sourceSets.main.get().runtimeClasspath
+    mainClass.set("com.omnidroid.tools.libretrodb.BuildSega32x")
+    args(
+        rootProject.file("omnidroid-cores").absolutePath,
+        rootProject.projectDir.absolutePath,
+        layout.projectDirectory.dir("cache").asFile.absolutePath,
+    )
+}

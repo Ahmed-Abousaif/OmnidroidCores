@@ -15,6 +15,7 @@ internal object ThumbnailIndex {
             "nes" to "Nintendo - Nintendo Entertainment System",
             "snes" to "Nintendo - Super Nintendo Entertainment System",
             "md" to "Sega - Mega Drive - Genesis",
+            "32x" to "Sega - 32X",
             "gb" to "Nintendo - Game Boy",
             "gbc" to "Nintendo - Game Boy Color",
             "gba" to "Nintendo - Game Boy Advance",

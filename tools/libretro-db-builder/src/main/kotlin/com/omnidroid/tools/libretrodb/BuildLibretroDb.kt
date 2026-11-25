@@ -18,6 +18,7 @@ private val SYSTEMS =
         "Nintendo - Nintendo Entertainment System.rdb" to "nes",
         "Nintendo - Super Nintendo Entertainment System.rdb" to "snes",
         "Sega - Mega Drive - Genesis.rdb" to "md",
+        "Sega - 32X.rdb" to "32x",
         "Nintendo - Game Boy.rdb" to "gb",
         "Nintendo - Game Boy Color.rdb" to "gbc",
         "Nintendo - Game Boy Advance.rdb" to "gba",

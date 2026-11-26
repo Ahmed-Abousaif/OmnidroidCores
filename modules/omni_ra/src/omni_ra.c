@@ -26,6 +26,8 @@ typedef struct omni_ra_file_handle_s {
 typedef struct omni_ra_track_handle_s {
   omni_ra_t* ra;
   void* host_handle;
+  int use_default_cd;
+  struct rc_hash_cdreader default_cd;
 } omni_ra_track_handle_t;
 
 typedef struct omni_ra_ach_list_wrap_s {
@@ -371,28 +373,54 @@ static void RC_CCONV omni_ra_file_close(void* file_handle) {
   free(wrap);
 }
 
-static void* RC_CCONV omni_ra_cd_open_track(const char* path, uint32_t track) {
+static void* RC_CCONV omni_ra_cd_open_track_iter(
+    const char* path, uint32_t track, const struct rc_hash_iterator* iterator) {
   omni_ra_t* ra = g_tls_active_ra;
-  if (!ra || !ra->has_cdreader_cbs || !ra->cdreader_cbs.open_track)
+  if (!ra)
     return NULL;
-  void* host_handle = ra->cdreader_cbs.open_track(ra->host.userdata, path, track);
+
+  void* host_handle = NULL;
+  int use_default = 0;
+  struct rc_hash_cdreader def_cd;
+  memset(&def_cd, 0, sizeof(def_cd));
+
+  if (ra->has_cdreader_cbs && ra->cdreader_cbs.open_track)
+    host_handle = ra->cdreader_cbs.open_track(ra->host.userdata, path, track);
+
+  if (!host_handle && iterator) {
+    rc_hash_get_default_cdreader(&def_cd);
+    if (def_cd.open_track_iterator) {
+      host_handle = def_cd.open_track_iterator(path, track, iterator);
+      use_default = (host_handle != NULL);
+    }
+  }
+
   if (!host_handle)
     return NULL;
-  omni_ra_track_handle_t* wrap = (omni_ra_track_handle_t*)malloc(sizeof(*wrap));
+
+  omni_ra_track_handle_t* wrap = (omni_ra_track_handle_t*)calloc(1, sizeof(*wrap));
   if (!wrap) {
-    if (ra->cdreader_cbs.close_track)
+    if (use_default && def_cd.close_track)
+      def_cd.close_track(host_handle);
+    else if (!use_default && ra->cdreader_cbs.close_track)
       ra->cdreader_cbs.close_track(ra->host.userdata, host_handle);
     return NULL;
   }
   wrap->ra = ra;
   wrap->host_handle = host_handle;
+  wrap->use_default_cd = use_default;
+  wrap->default_cd = def_cd;
   return wrap;
 }
 
 static size_t RC_CCONV omni_ra_cd_read_sector(
     void* track_handle, uint32_t sector, void* buffer, size_t requested_bytes) {
   omni_ra_track_handle_t* wrap = (omni_ra_track_handle_t*)track_handle;
-  if (!wrap || !wrap->ra->cdreader_cbs.read_sector)
+  if (!wrap)
+    return 0;
+  if (wrap->use_default_cd && wrap->default_cd.read_sector)
+    return wrap->default_cd.read_sector(wrap->host_handle, sector, buffer, requested_bytes);
+  if (!wrap->ra->cdreader_cbs.read_sector)
     return 0;
   uint32_t chunk = requested_bytes > 0xFFFFFFFFu ? 0xFFFFFFFFu : (uint32_t)requested_bytes;
   return (size_t)wrap->ra->cdreader_cbs.read_sector(
@@ -403,14 +431,20 @@ static void RC_CCONV omni_ra_cd_close_track(void* track_handle) {
   omni_ra_track_handle_t* wrap = (omni_ra_track_handle_t*)track_handle;
   if (!wrap)
     return;
-  if (wrap->ra->cdreader_cbs.close_track)
+  if (wrap->use_default_cd && wrap->default_cd.close_track)
+    wrap->default_cd.close_track(wrap->host_handle);
+  else if (!wrap->use_default_cd && wrap->ra->cdreader_cbs.close_track)
     wrap->ra->cdreader_cbs.close_track(wrap->ra->host.userdata, wrap->host_handle);
   free(wrap);
 }
 
 static uint32_t RC_CCONV omni_ra_cd_first_track_sector(void* track_handle) {
   omni_ra_track_handle_t* wrap = (omni_ra_track_handle_t*)track_handle;
-  if (wrap && wrap->ra->cdreader_cbs.first_track_sector)
+  if (!wrap)
+    return 0;
+  if (wrap->use_default_cd && wrap->default_cd.first_track_sector)
+    return wrap->default_cd.first_track_sector(wrap->host_handle);
+  if (wrap->ra->cdreader_cbs.first_track_sector)
     return wrap->ra->cdreader_cbs.first_track_sector(wrap->ra->host.userdata, wrap->host_handle);
   return 0;
 }
@@ -624,7 +658,7 @@ omni_ra_t* omni_ra_create(const omni_ra_host_t* host) {
       hcbs.filereader.close = omni_ra_file_close;
     }
     if (ra->has_cdreader_cbs) {
-      hcbs.cdreader.open_track = omni_ra_cd_open_track;
+      hcbs.cdreader.open_track_iterator = omni_ra_cd_open_track_iter;
       hcbs.cdreader.read_sector = omni_ra_cd_read_sector;
       hcbs.cdreader.close_track = omni_ra_cd_close_track;
       hcbs.cdreader.first_track_sector = omni_ra_cd_first_track_sector;

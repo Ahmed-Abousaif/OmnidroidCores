@@ -1,0 +1,686 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-11-26T19:55:45Z",
+  "coresVersion": "3.2.0",
+  "modules": {
+    "omni_ra": []
+  },
+  "cores": {
+    "armsx2": {
+      "file": "libarmsx2_libretro_android.so",
+      "supportedAbis": [
+        "arm64-v8a"
+      ],
+      "systems": [
+        "ps2"
+      ],
+      "ra": {
+        "ra_supported": false,
+        "ra_console_ids": [
+          21
+        ],
+        "library_name": "ARMSX2",
+        "min_core_version": "0.0",
+        "ra_notes": "PS2 core does not currently expose compliant RA libretro memory maps.",
+        "quirks": [
+          "disc_hash"
+        ],
+        "schemaVersion": 1
+      }
+    },
+    "armsx3": {
+      "file": "libomnidroid-armsx3.so",
+      "supportedAbis": [
+        "arm64-v8a"
+      ],
+      "systems": [],
+      "ra": {
+        "ra_supported": false,
+        "ra_console_ids": [
+          82
+        ],
+        "library_name": "ARMSX3",
+        "min_core_version": "0.0",
+        "ra_notes": "Non-libretro PS3 backend; RA memory maps are not exposed.",
+        "quirks": [
+          "non_libretro"
+        ],
+        "schemaVersion": 1
+      }
+    },
+    "azahar": {
+      "file": "libazahar_libretro_android.so",
+      "supportedAbis": [
+        "arm64-v8a"
+      ],
+      "systems": [
+        "3ds"
+      ],
+      "ra": {
+        "ra_supported": false,
+        "ra_console_ids": [
+          62
+        ],
+        "library_name": "Azahar",
+        "min_core_version": "0.0",
+        "ra_notes": "Nintendo 3DS is not yet active for standard RA achievements in libretro.",
+        "quirks": [
+          "encrypted_ncch"
+        ],
+        "schemaVersion": 1
+      }
+    },
+    "cemu": {
+      "file": "libcemu_libretro_android.so",
+      "supportedAbis": [
+        "arm64-v8a"
+      ],
+      "systems": [
+        "wiiu"
+      ],
+      "ra": {
+        "ra_supported": false,
+        "ra_console_ids": [
+          20
+        ],
+        "library_name": "Cemu",
+        "min_core_version": "0.0",
+        "ra_notes": "Wii U RA support requires native Cemu RA integration / unsupported libretro hash.",
+        "quirks": [],
+        "schemaVersion": 1
+      }
+    },
+    "citra": {
+      "file": "libcitra_libretro_android.so",
+      "supportedAbis": [
+        "arm64-v8a",
+        "x86_64"
+      ],
+      "systems": [],
+      "ra": {
+        "ra_supported": false,
+        "ra_console_ids": [
+          62
+        ],
+        "library_name": "Citra",
+        "min_core_version": "0.0",
+        "ra_notes": "Nintendo 3DS is not yet active for standard RA achievements in libretro.",
+        "quirks": [
+          "encrypted_ncch"
+        ],
+        "schemaVersion": 1
+      }
+    },
+    "dolphin": {
+      "file": "libdolphin_libretro_android.so",
+      "supportedAbis": [
+        "arm64-v8a",
+        "armeabi-v7a",
+        "x86",
+        "x86_64"
+      ],
+      "systems": [
+        "gamecube",
+        "wii"
+      ],
+      "ra": {
+        "ra_supported": true,
+        "ra_console_ids": [
+          16,
+          19
+        ],
+        "library_name": "dolphin-emu",
+        "min_core_version": "5.0",
+        "ra_notes": "GameCube/Wii (Wii sets depend on RA rollouts; disallow dolphin_cheats_enabled in hardcore).",
+        "quirks": [
+          "prefers_mmap",
+          "disallow_cheats_core_option"
+        ],
+        "schemaVersion": 1
+      }
+    },
+    "dosbox_pure": {
+      "file": "libdosbox_pure_libretro_android.so",
+      "supportedAbis": [
+        "arm64-v8a",
+        "armeabi-v7a",
+        "x86",
+        "x86_64"
+      ],
+      "systems": [
+        "dos"
+      ],
+      "ra": {
+        "ra_supported": true,
+        "ra_console_ids": [
+          26
+        ],
+        "library_name": "DOSBox-pure",
+        "min_core_version": "0.9",
+        "ra_notes": "MS-DOS (requires dosbox_pure_strict_mode=true for RA).",
+        "quirks": [
+          "prefers_mmap",
+          "disallow_non_strict_mode"
+        ],
+        "schemaVersion": 1
+      }
+    },
+    "fbneo": {
+      "file": "libfbneo_libretro_android.so",
+      "supportedAbis": [
+        "arm64-v8a",
+        "armeabi-v7a",
+        "x86",
+        "x86_64"
+      ],
+      "systems": [
+        "fbneo",
+        "mame2003plus"
+      ],
+      "ra": {
+        "ra_supported": true,
+        "ra_console_ids": [
+          27
+        ],
+        "library_name": "FinalBurn Neo",
+        "min_core_version": "1.0",
+        "ra_notes": "Arcade romsets hashed by filename (.zip/.7z); disallow cheats, Universe BIOS, underclock, and patched sets.",
+        "quirks": [
+          "prefers_mmap",
+          "filename_hash",
+          "disallow_cheats_core_option"
+        ],
+        "schemaVersion": 1
+      }
+    },
+    "fceumm": {
+      "file": "libfceumm_libretro_android.so",
+      "supportedAbis": [
+        "arm64-v8a",
+        "armeabi-v7a",
+        "x86",
+        "x86_64"
+      ],
+      "systems": [
+        "nes"
+      ],
+      "ra": {
+        "ra_supported": true,
+        "ra_console_ids": [
+          7,
+          81
+        ],
+        "library_name": "FCEUmm",
+        "min_core_version": "0.1",
+        "ra_notes": "NES (.nes iNES headered) and Famicom Disk System (.fds).",
+        "quirks": [
+          "headered_rom",
+          "disallow_cheats_core_option",
+          "pal_region_disallowed"
+        ],
+        "schemaVersion": 1
+      }
+    },
+    "flycast": {
+      "file": "libflycast_libretro_android.so",
+      "supportedAbis": [
+        "arm64-v8a",
+        "armeabi-v7a",
+        "x86",
+        "x86_64"
+      ],
+      "systems": [
+        "dreamcast"
+      ],
+      "ra": {
+        "ra_supported": true,
+        "ra_console_ids": [
+          40
+        ],
+        "library_name": "Flycast",
+        "min_core_version": "2.0",
+        "ra_notes": "Dreamcast GDI/CDI/CHD; disallow SH4 underclock (<200).",
+        "quirks": [
+          "prefers_mmap",
+          "disc_hash"
+        ],
+        "schemaVersion": 1
+      }
+    },
+    "gambatte": {
+      "file": "libgambatte_libretro_android.so",
+      "supportedAbis": [
+        "arm64-v8a",
+        "armeabi-v7a",
+        "x86",
+        "x86_64"
+      ],
+      "systems": [
+        "gb",
+        "gbc"
+      ],
+      "ra": {
+        "ra_supported": true,
+        "ra_console_ids": [
+          4,
+          6
+        ],
+        "library_name": "Gambatte",
+        "min_core_version": "0.5",
+        "ra_notes": "Game Boy and Game Boy Color.",
+        "quirks": [],
+        "schemaVersion": 1
+      }
+    },
+    "genesis_plus_gx": {
+      "file": "libgenesis_plus_gx_libretro_android.so",
+      "supportedAbis": [
+        "arm64-v8a",
+        "armeabi-v7a",
+        "x86",
+        "x86_64"
+      ],
+      "systems": [
+        "gg",
+        "md",
+        "scd",
+        "sms"
+      ],
+      "ra": {
+        "ra_supported": true,
+        "ra_console_ids": [
+          1,
+          11,
+          15,
+          9,
+          33
+        ],
+        "library_name": "Genesis Plus GX",
+        "min_core_version": "1.7.4",
+        "ra_notes": "Mega Drive, Master System, Game Gear, Sega CD, SG-1000; disallow lock-on cheat carts in hardcore.",
+        "quirks": [
+          "prefers_mmap",
+          "disc_hash",
+          "disallow_cheats_core_option",
+          "pal_region_disallowed"
+        ],
+        "schemaVersion": 1
+      }
+    },
+    "handy": {
+      "file": "libhandy_libretro_android.so",
+      "supportedAbis": [
+        "arm64-v8a",
+        "armeabi-v7a",
+        "x86",
+        "x86_64"
+      ],
+      "systems": [
+        "lynx"
+      ],
+      "ra": {
+        "ra_supported": true,
+        "ra_console_ids": [
+          13
+        ],
+        "library_name": "Handy",
+        "min_core_version": "0.98",
+        "ra_notes": "Atari Lynx (.lnx header handled by rhash).",
+        "quirks": [
+          "headered_rom"
+        ],
+        "schemaVersion": 1
+      }
+    },
+    "mame2003_plus": {
+      "file": "libmame2003_plus_libretro_android.so",
+      "supportedAbis": [
+        "arm64-v8a",
+        "armeabi-v7a",
+        "x86",
+        "x86_64"
+      ],
+      "systems": [],
+      "ra": {
+        "ra_supported": false,
+        "ra_console_ids": [
+          27
+        ],
+        "library_name": "MAME 2003-Plus",
+        "min_core_version": "0.0",
+        "ra_notes": "RA Arcade achievements require FinalBurn Neo; MAME 2003-Plus is unsupported.",
+        "quirks": [],
+        "schemaVersion": 1
+      }
+    },
+    "mednafen_ngp": {
+      "file": "libmednafen_ngp_libretro_android.so",
+      "supportedAbis": [
+        "arm64-v8a",
+        "armeabi-v7a",
+        "x86",
+        "x86_64"
+      ],
+      "systems": [
+        "ngc",
+        "ngp"
+      ],
+      "ra": {
+        "ra_supported": true,
+        "ra_console_ids": [
+          14
+        ],
+        "library_name": "Beetle NeoPop",
+        "min_core_version": "1.29",
+        "ra_notes": "Neo Geo Pocket and Neo Geo Pocket Color.",
+        "quirks": [],
+        "schemaVersion": 1
+      }
+    },
+    "mednafen_pce_fast": {
+      "file": "libmednafen_pce_fast_libretro_android.so",
+      "supportedAbis": [
+        "arm64-v8a",
+        "armeabi-v7a",
+        "x86",
+        "x86_64"
+      ],
+      "systems": [
+        "pce"
+      ],
+      "ra": {
+        "ra_supported": true,
+        "ra_console_ids": [
+          8,
+          76
+        ],
+        "library_name": "Beetle PCE Fast",
+        "min_core_version": "1.29",
+        "ra_notes": "PC Engine / TurboGrafx-16 and PC Engine CD (CUE/CHD).",
+        "quirks": [
+          "disc_hash",
+          "headered_rom"
+        ],
+        "schemaVersion": 1
+      }
+    },
+    "mednafen_wswan": {
+      "file": "libmednafen_wswan_libretro_android.so",
+      "supportedAbis": [
+        "arm64-v8a",
+        "armeabi-v7a",
+        "x86",
+        "x86_64"
+      ],
+      "systems": [
+        "ws",
+        "wsc"
+      ],
+      "ra": {
+        "ra_supported": true,
+        "ra_console_ids": [
+          53
+        ],
+        "library_name": "Beetle Cygne",
+        "min_core_version": "1.29",
+        "ra_notes": "WonderSwan and WonderSwan Color.",
+        "quirks": [],
+        "schemaVersion": 1
+      }
+    },
+    "melondsds": {
+      "file": "libmelondsds_libretro_android.so",
+      "supportedAbis": [
+        "arm64-v8a",
+        "armeabi-v7a",
+        "x86_64"
+      ],
+      "systems": [
+        "nds"
+      ],
+      "ra": {
+        "ra_supported": true,
+        "ra_console_ids": [
+          18
+        ],
+        "library_name": "melonDS DS",
+        "min_core_version": "0.9",
+        "ra_notes": "Nintendo DS (NDS); disallow DSi console mode override for NDS sets.",
+        "quirks": [
+          "prefers_mmap",
+          "disallow_dsi_mode"
+        ],
+        "schemaVersion": 1
+      }
+    },
+    "mgba": {
+      "file": "libmgba_libretro_android.so",
+      "supportedAbis": [
+        "arm64-v8a",
+        "armeabi-v7a",
+        "x86",
+        "x86_64"
+      ],
+      "systems": [
+        "gba"
+      ],
+      "ra": {
+        "ra_supported": true,
+        "ra_console_ids": [
+          5
+        ],
+        "library_name": "mGBA",
+        "min_core_version": "0.10",
+        "ra_notes": "Game Boy Advance IWRAM/EWRAM memory map regions.",
+        "quirks": [
+          "prefers_mmap"
+        ],
+        "schemaVersion": 1
+      }
+    },
+    "mupen64plus_next_gles3": {
+      "file": "libmupen64plus_next_gles3_libretro_android.so",
+      "supportedAbis": [
+        "arm64-v8a",
+        "armeabi-v7a",
+        "x86",
+        "x86_64"
+      ],
+      "systems": [
+        "n64"
+      ],
+      "ra": {
+        "ra_supported": true,
+        "ra_console_ids": [
+          2
+        ],
+        "library_name": "Mupen64Plus-Next",
+        "min_core_version": "2.5",
+        "ra_notes": "Nintendo 64 RDRAM (supports .z64/.n64/.v64 byte-swapping in rhash).",
+        "quirks": [
+          "byteswapped_rom"
+        ],
+        "schemaVersion": 1
+      }
+    },
+    "pcsx_rearmed": {
+      "file": "libpcsx_rearmed_libretro_android.so",
+      "supportedAbis": [
+        "arm64-v8a",
+        "armeabi-v7a",
+        "x86",
+        "x86_64"
+      ],
+      "systems": [
+        "psx"
+      ],
+      "ra": {
+        "ra_supported": true,
+        "ra_console_ids": [
+          12
+        ],
+        "library_name": "PCSX-ReARMed",
+        "min_core_version": "r22",
+        "ra_notes": "PlayStation 1 (BIN/CUE, CHD, M3U multi-disc).",
+        "quirks": [
+          "disc_hash",
+          "multi_disc"
+        ],
+        "schemaVersion": 1
+      }
+    },
+    "picodrive": {
+      "file": "libpicodrive_libretro_android.so",
+      "supportedAbis": [
+        "arm64-v8a",
+        "armeabi-v7a",
+        "x86",
+        "x86_64"
+      ],
+      "systems": [
+        "32x",
+        "md",
+        "scd"
+      ],
+      "ra": {
+        "ra_supported": true,
+        "ra_console_ids": [
+          1,
+          9,
+          10,
+          11
+        ],
+        "library_name": "PicoDrive",
+        "min_core_version": "1.99",
+        "ra_notes": "Mega Drive, Sega CD, Sega 32X, Master System.",
+        "quirks": [
+          "disc_hash",
+          "pal_region_disallowed"
+        ],
+        "schemaVersion": 1
+      }
+    },
+    "ppsspp": {
+      "file": "libppsspp_libretro_android.so",
+      "supportedAbis": [
+        "arm64-v8a",
+        "armeabi-v7a",
+        "x86",
+        "x86_64"
+      ],
+      "systems": [
+        "psp"
+      ],
+      "ra": {
+        "ra_supported": true,
+        "ra_console_ids": [
+          41
+        ],
+        "library_name": "PPSSPP",
+        "min_core_version": "1.15",
+        "ra_notes": "PSP ISO/CSO/CHD; requires SET_MEMORY_MAPS and disallow ppsspp_cheats=enabled in hardcore.",
+        "quirks": [
+          "prefers_mmap",
+          "disc_hash",
+          "disallow_cheats_core_option"
+        ],
+        "schemaVersion": 1
+      }
+    },
+    "prosystem": {
+      "file": "libprosystem_libretro_android.so",
+      "supportedAbis": [
+        "arm64-v8a",
+        "armeabi-v7a",
+        "x86",
+        "x86_64"
+      ],
+      "systems": [
+        "atari7800"
+      ],
+      "ra": {
+        "ra_supported": true,
+        "ra_console_ids": [
+          51
+        ],
+        "library_name": "ProSystem",
+        "min_core_version": "1.3",
+        "ra_notes": "Atari 7800 (.a78 header stripped automatically by rhash).",
+        "quirks": [
+          "headered_rom"
+        ],
+        "schemaVersion": 1
+      }
+    },
+    "snes9x": {
+      "file": "libsnes9x_libretro_android.so",
+      "supportedAbis": [
+        "arm64-v8a",
+        "armeabi-v7a",
+        "x86",
+        "x86_64"
+      ],
+      "systems": [
+        "snes"
+      ],
+      "ra": {
+        "ra_supported": true,
+        "ra_console_ids": [
+          3
+        ],
+        "library_name": "Snes9x",
+        "min_core_version": "1.62",
+        "ra_notes": "SNES WRAM/SRAM via RETRO_ENVIRONMENT_SET_MEMORY_MAPS + SRAM fallback.",
+        "quirks": [
+          "prefers_mmap",
+          "headered_rom",
+          "pal_region_disallowed"
+        ],
+        "schemaVersion": 1
+      }
+    },
+    "stella": {
+      "file": "libstella_libretro_android.so",
+      "supportedAbis": [
+        "arm64-v8a",
+        "armeabi-v7a",
+        "x86",
+        "x86_64"
+      ],
+      "systems": [
+        "atari2600"
+      ],
+      "ra": {
+        "ra_supported": true,
+        "ra_console_ids": [
+          25
+        ],
+        "library_name": "Stella",
+        "min_core_version": "6.7",
+        "ra_notes": "Atari 2600 system RAM and cartridge hashing.",
+        "quirks": [],
+        "schemaVersion": 1
+      }
+    },
+    "switch": {
+      "file": "libyuzu-android.so",
+      "supportedAbis": [
+        "arm64-v8a"
+      ],
+      "systems": [
+        "switch"
+      ],
+      "ra": {
+        "ra_supported": false,
+        "ra_console_ids": [],
+        "library_name": "Eden",
+        "min_core_version": "0.0",
+        "ra_notes": "Non-libretro backend; Nintendo Switch is unsupported by RetroAchievements.",
+        "quirks": [
+          "non_libretro"
+        ],
+        "schemaVersion": 1
+      }
+    }
+  }
+}

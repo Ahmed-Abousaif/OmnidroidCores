@@ -1,0 +1,3 @@
+[submodule "modules/omni_ra/third_party/rcheevos"]
+	path = modules/omni_ra/third_party/rcheevos
+	url = https://github.com/RetroAchievements/rcheevos.git

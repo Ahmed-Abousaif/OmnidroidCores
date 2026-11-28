@@ -86,6 +86,16 @@ class CoreSpec:
 # Declarative Core Registry
 # ---------------------------------------------------------------------------
 CORES: Dict[str, CoreSpec] = {
+    # Additional consoles and computers
+    "a5200": CoreSpec("a5200", "a5200"),
+    "atari800": CoreSpec("atari800", "Atari800"),
+    "yabasanshiro": CoreSpec("yabasanshiro", "YabaSanshiro"),
+    "opera": CoreSpec("opera", "Opera"),
+    "gearcoleco": CoreSpec("gearcoleco", "Gearcoleco"),
+    "vice_x64": CoreSpec("vice_x64", "VICE x64"),
+    "fmsx": CoreSpec("fmsx", "fMSX"),
+    "applewin": CoreSpec("applewin", "AppleWin"),
+    "virtualjaguar": CoreSpec("virtualjaguar", "Virtual Jaguar"),
     # Atari
     "stella": CoreSpec("stella", "Atari 2600"),
     "prosystem": CoreSpec("prosystem", "Atari 7800"),

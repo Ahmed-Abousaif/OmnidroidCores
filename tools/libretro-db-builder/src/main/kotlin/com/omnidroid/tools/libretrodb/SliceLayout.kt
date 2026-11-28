@@ -11,6 +11,16 @@ internal object SliceLayout {
 
     val slices =
         listOf(
+            SliceSpec("atari5200", listOf("atari5200"), listOf("a5200")),
+            SliceSpec("atari800", listOf("atari800"), listOf("atari800")),
+            SliceSpec("saturn", listOf("saturn"), listOf("yabasanshiro")),
+            SliceSpec("3do", listOf("3do"), listOf("opera")),
+            SliceSpec("colecovision", listOf("colecovision"), listOf("gearcoleco")),
+            SliceSpec("c64", listOf("c64"), listOf("vice_x64")),
+            SliceSpec("msx", listOf("msx"), listOf("fmsx")),
+            SliceSpec("msx2", listOf("msx2"), listOf("fmsx")),
+            SliceSpec("apple2", listOf("apple2"), listOf("applewin")),
+            SliceSpec("jaguar", listOf("jaguar"), listOf("virtualjaguar")),
             SliceSpec("atari2600", listOf("atari2600"), listOf("stella")),
             SliceSpec("nes", listOf("nes"), listOf("fceumm")),
             SliceSpec("snes", listOf("snes"), listOf("snes9x")),

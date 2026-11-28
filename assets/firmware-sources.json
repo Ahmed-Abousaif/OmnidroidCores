@@ -1,0 +1,130 @@
+{
+  "schemaVersion": 1,
+  "sources": {
+    "retropie": {
+      "repository": "https://github.com/archtaurus/RetroPieBIOS",
+      "revision": "c4ba6e653a7e431b31c5a3ec4a6577081102cf20"
+    },
+    "fmsx": {
+      "repository": "https://github.com/libretro/fmsx-libretro",
+      "revision": "4de11755ce4f196ac1c8a7bb20bb4eccbc87a7d4"
+    },
+    "retrobios": {
+      "repository": "https://github.com/Abdess/retrobios",
+      "revision": "f51802ab31570675f8a5fd1d846b79d869538075"
+    }
+  },
+  "packages": {
+    "saturn": {
+      "file": "saturn.zip",
+      "size": 456533,
+      "sha256": "5c8141e8f3ec669157a416a7cf4aab8960d9e56755434739b9528c1d130bb2af",
+      "files": [
+        {
+          "name": "saturn_bios.bin",
+          "sourcePath": "BIOS/saturn_bios.bin",
+          "size": 524288,
+          "md5": "af5828fdff51384f99b3c4926be27762",
+          "source": "retropie",
+          "sourceUrl": "https://raw.githubusercontent.com/archtaurus/RetroPieBIOS/c4ba6e653a7e431b31c5a3ec4a6577081102cf20/BIOS/saturn_bios.bin",
+          "sha256": "ae4058627bb5db9be6d8d83c6be95a4aa981acc8a89042e517e73317886c8bc2"
+        }
+      ]
+    },
+    "colecovision": {
+      "file": "colecovision.zip",
+      "size": 5607,
+      "sha256": "e653acfff64b1ce5d698e58e302f38df299ca050bbf29926bfc9921429562b7b",
+      "files": [
+        {
+          "name": "colecovision.rom",
+          "sourcePath": "BIOS/colecovision.rom",
+          "size": 8192,
+          "md5": "2c66f5911e5b42b8ebe113403548eee7",
+          "source": "retropie",
+          "sourceUrl": "https://raw.githubusercontent.com/archtaurus/RetroPieBIOS/c4ba6e653a7e431b31c5a3ec4a6577081102cf20/BIOS/colecovision.rom",
+          "sha256": "990bf1956f10207d8781b619eb74f89b00d921c8d45c95c334c16c8cceca09ad"
+        }
+      ]
+    },
+    "msx": {
+      "file": "msx.zip",
+      "size": 256861,
+      "sha256": "c7fbef1f0af58ef279256afec694b91fb1ed455352de9a36adbadef2928c39d4",
+      "files": [
+        {
+          "name": "DISK.ROM",
+          "sourcePath": "fMSX/ROMs/DISK.ROM",
+          "size": 16384,
+          "md5": "80dcd1ad1a4cf65d64b7ba10504e8190",
+          "source": "fmsx",
+          "sourceUrl": "https://raw.githubusercontent.com/libretro/fmsx-libretro/4de11755ce4f196ac1c8a7bb20bb4eccbc87a7d4/fMSX/ROMs/DISK.ROM",
+          "sha256": "31740a761447d7590c304338d389b0ae114546a8b9f79c9ffd5e374f80b7d354"
+        },
+        {
+          "name": "FMPAC.ROM",
+          "sourcePath": "fMSX/ROMs/FMPAC.ROM",
+          "size": 65536,
+          "md5": "6f69cc8b5ed761b03afd78000dfb0e19",
+          "source": "fmsx",
+          "sourceUrl": "https://raw.githubusercontent.com/libretro/fmsx-libretro/4de11755ce4f196ac1c8a7bb20bb4eccbc87a7d4/fMSX/ROMs/FMPAC.ROM",
+          "sha256": "3cfe44646b69a622656b96305f1b975f48ca018839f7946895f7a1352d9720aa"
+        },
+        {
+          "name": "KANJI.ROM",
+          "sourcePath": "fMSX/ROMs/KANJI.ROM",
+          "size": 131072,
+          "md5": "febe8782b466d7c3b16de6d104826b34",
+          "source": "fmsx",
+          "sourceUrl": "https://raw.githubusercontent.com/libretro/fmsx-libretro/4de11755ce4f196ac1c8a7bb20bb4eccbc87a7d4/fMSX/ROMs/KANJI.ROM",
+          "sha256": "56785703b14f252ce77be586716dbf5d94125e93b9e6069ff26f7686566cd91a"
+        },
+        {
+          "name": "MSX.ROM",
+          "sourcePath": "bios/Microsoft/MSX/MSX_8020-20bios.rom",
+          "size": 32768,
+          "md5": "364a1a579fe5cb8dba54519bcfcdac0d",
+          "source": "retrobios",
+          "sourceUrl": "https://raw.githubusercontent.com/Abdess/retrobios/f51802ab31570675f8a5fd1d846b79d869538075/bios/Microsoft/MSX/MSX_8020-20bios.rom",
+          "sha256": "1c85dac5536fa3ba6f2cb70deba02ff680b34ac6cc787d2977258bd663a99555"
+        },
+        {
+          "name": "MSX2.ROM",
+          "sourcePath": "fMSX/ROMs/MSX2.ROM",
+          "size": 32768,
+          "md5": "ec3a01c91f24fbddcbcab0ad301bc9ef",
+          "source": "fmsx",
+          "sourceUrl": "https://raw.githubusercontent.com/libretro/fmsx-libretro/4de11755ce4f196ac1c8a7bb20bb4eccbc87a7d4/fMSX/ROMs/MSX2.ROM",
+          "sha256": "4bc4ae85ca5f28246cd3e7b7e017d298ddd375603657f84ef2c7954bc2d9b919"
+        },
+        {
+          "name": "MSX2EXT.ROM",
+          "sourcePath": "fMSX/ROMs/MSX2EXT.ROM",
+          "size": 16384,
+          "md5": "2183c2aff17cf4297bdb496de78c2e8a",
+          "source": "fmsx",
+          "sourceUrl": "https://raw.githubusercontent.com/libretro/fmsx-libretro/4de11755ce4f196ac1c8a7bb20bb4eccbc87a7d4/fMSX/ROMs/MSX2EXT.ROM",
+          "sha256": "6c6f421a10c428d960b7ecc990f99af1c638147f747bddca7b0bf0e2ab738300"
+        },
+        {
+          "name": "MSXDOS2.ROM",
+          "sourcePath": "fMSX/ROMs/MSXDOS2.ROM",
+          "size": 65536,
+          "md5": "6418d091cd6907bbcf940324339e43bb",
+          "source": "fmsx",
+          "sourceUrl": "https://raw.githubusercontent.com/libretro/fmsx-libretro/4de11755ce4f196ac1c8a7bb20bb4eccbc87a7d4/fMSX/ROMs/MSXDOS2.ROM",
+          "sha256": "08d582fda65f22e4397353855e828539a64df08a540e5d64706b3362ea09be17"
+        },
+        {
+          "name": "PAINTER.ROM",
+          "sourcePath": "fMSX/ROMs/PAINTER.ROM",
+          "size": 65536,
+          "md5": "403cdea1cbd2bb24fae506941f8f655e",
+          "source": "fmsx",
+          "sourceUrl": "https://raw.githubusercontent.com/libretro/fmsx-libretro/4de11755ce4f196ac1c8a7bb20bb4eccbc87a7d4/fMSX/ROMs/PAINTER.ROM",
+          "sha256": "62e646cc9f0d50422016f12a77995be5547649b5961b58c883ff4d48baac280f"
+        }
+      ]
+    }
+  }
+}

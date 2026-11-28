@@ -11,7 +11,7 @@ internal data class SliceFile(
     val gzip: ByteArray,
     val sha256: String,
     val rows: Int,
-    val fileName: String = "${spec.id}.sqlite." + if (spec.id == "32x") "gzip" else "gz",
+    val fileName: String = "${spec.id}.sqlite." + if (spec.id in setOf("32x", "atari5200", "atari800", "saturn", "3do", "colecovision", "c64", "msx", "msx2", "apple2", "jaguar")) "gzip" else "gz",
 )
 
 internal object SliceWriter {

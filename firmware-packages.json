@@ -1,0 +1,95 @@
+{
+  "schemaVersion": 1,
+  "packages": {
+    "saturn": [
+      {
+        "name": "saturn_bios.bin",
+        "sourcePath": "BIOS/saturn_bios.bin",
+        "size": 524288,
+        "md5": "af5828fdff51384f99b3c4926be27762",
+        "source": "retropie"
+      }
+    ],
+    "colecovision": [
+      {
+        "name": "colecovision.rom",
+        "sourcePath": "BIOS/colecovision.rom",
+        "size": 8192,
+        "md5": "2c66f5911e5b42b8ebe113403548eee7",
+        "source": "retropie"
+      }
+    ],
+    "msx": [
+      {
+        "name": "MSX.ROM",
+        "sourcePath": "bios/Microsoft/MSX/MSX_8020-20bios.rom",
+        "size": 32768,
+        "md5": "364a1a579fe5cb8dba54519bcfcdac0d",
+        "source": "retrobios"
+      },
+      {
+        "name": "MSX2.ROM",
+        "sourcePath": "fMSX/ROMs/MSX2.ROM",
+        "size": 32768,
+        "md5": "ec3a01c91f24fbddcbcab0ad301bc9ef",
+        "source": "fmsx"
+      },
+      {
+        "name": "MSX2EXT.ROM",
+        "sourcePath": "fMSX/ROMs/MSX2EXT.ROM",
+        "size": 16384,
+        "md5": "2183c2aff17cf4297bdb496de78c2e8a",
+        "source": "fmsx"
+      },
+      {
+        "name": "DISK.ROM",
+        "sourcePath": "fMSX/ROMs/DISK.ROM",
+        "size": 16384,
+        "md5": "80dcd1ad1a4cf65d64b7ba10504e8190",
+        "source": "fmsx"
+      },
+      {
+        "name": "FMPAC.ROM",
+        "sourcePath": "fMSX/ROMs/FMPAC.ROM",
+        "size": 65536,
+        "md5": "6f69cc8b5ed761b03afd78000dfb0e19",
+        "source": "fmsx"
+      },
+      {
+        "name": "MSXDOS2.ROM",
+        "sourcePath": "fMSX/ROMs/MSXDOS2.ROM",
+        "size": 65536,
+        "md5": "6418d091cd6907bbcf940324339e43bb",
+        "source": "fmsx"
+      },
+      {
+        "name": "PAINTER.ROM",
+        "sourcePath": "fMSX/ROMs/PAINTER.ROM",
+        "size": 65536,
+        "md5": "403cdea1cbd2bb24fae506941f8f655e",
+        "source": "fmsx"
+      },
+      {
+        "name": "KANJI.ROM",
+        "sourcePath": "fMSX/ROMs/KANJI.ROM",
+        "size": 131072,
+        "md5": "febe8782b466d7c3b16de6d104826b34",
+        "source": "fmsx"
+      }
+    ]
+  },
+  "sources": {
+    "retropie": {
+      "repository": "https://github.com/archtaurus/RetroPieBIOS",
+      "revision": "c4ba6e653a7e431b31c5a3ec4a6577081102cf20"
+    },
+    "fmsx": {
+      "repository": "https://github.com/libretro/fmsx-libretro",
+      "revision": "4de11755ce4f196ac1c8a7bb20bb4eccbc87a7d4"
+    },
+    "retrobios": {
+      "repository": "https://github.com/Abdess/retrobios",
+      "revision": "f51802ab31570675f8a5fd1d846b79d869538075"
+    }
+  }
+}

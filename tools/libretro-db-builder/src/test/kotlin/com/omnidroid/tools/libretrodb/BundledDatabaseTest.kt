@@ -17,7 +17,7 @@ class BundledDatabaseTest {
                 "../omnidroid-metadata-libretro-db/src/main/assets/libretro-detect.sqlite",
             )
         assertTrue(detect.exists())
-        assertTrue(detect.length() < 1024 * 1024)
+        assertTrue("CRC detection index should stay compact as more platforms are added", detect.length() < 4 * 1024 * 1024)
         val manifest = File(cores, "omnidroid_core_gambatte/src/main/assets/libretro-db/gambatte/manifest.json").readText()
         val sha = Regex(""""sha256":"([0-9a-f]+)"""").find(manifest)!!.groupValues[1]
         val fileName = Regex(""""file":"([^"]+)"""").find(manifest)!!.groupValues[1]

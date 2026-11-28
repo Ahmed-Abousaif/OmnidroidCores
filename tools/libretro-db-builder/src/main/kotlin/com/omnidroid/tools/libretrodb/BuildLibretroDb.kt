@@ -27,6 +27,16 @@ private val SYSTEMS =
         "Sony - PlayStation Portable.rdb" to "psp",
         "Nintendo - Nintendo DS.rdb" to "nds",
         "Sega - Game Gear.rdb" to "gg",
+        "Atari - 5200.rdb" to "atari5200",
+        "Atari - 8-bit Family.rdb" to "atari800",
+        "Sega - Saturn.rdb" to "saturn",
+        "The 3DO Company - 3DO.rdb" to "3do",
+        "Coleco - ColecoVision.rdb" to "colecovision",
+        "Commodore - 64.rdb" to "c64",
+        "Microsoft - MSX.rdb" to "msx",
+        "Microsoft - MSX2.rdb" to "msx2",
+        "Apple - II.rdb" to "apple2",
+        "Atari - Jaguar.rdb" to "jaguar",
         "Atari - 2600.rdb" to "atari2600",
         "Sony - PlayStation.rdb" to "psx",
         "FBNeo - Arcade Games.rdb" to "fbneo",
@@ -245,7 +255,7 @@ private fun writeDetection(
         markerInsert.executeBatch()
 
         val cartInsert = connection.prepareStatement("INSERT INTO bin_carts (crc, system) VALUES (?, ?)")
-        rows.filter { it.system in setOf("atari7800", "pce", "32x") }.forEach { row ->
+        rows.filter { it.system in setOf("atari7800", "pce", "32x", "atari5200", "atari800", "colecovision", "c64", "msx", "msx2", "apple2", "jaguar") }.forEach { row ->
             val crc = row.crc32 ?: return@forEach
             cartInsert.setString(1, crc)
             cartInsert.setString(2, row.system)

@@ -113,6 +113,7 @@ if(ANDROID)
   )
   target_link_libraries(omnidroid_ra PRIVATE m dl)
 elseif(UNIX AND NOT APPLE)
+  target_compile_options(omnidroid_ra PRIVATE -include strings.h)
   target_link_options(omnidroid_ra PRIVATE
     "-Wl,--version-script=${CMAKE_CURRENT_SOURCE_DIR}/exports.map"
     "-Wl,--exclude-libs,ALL"

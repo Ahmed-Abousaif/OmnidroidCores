@@ -1,0 +1,44 @@
+name: omni_ra Build & Verify
+
+on:
+  pull_request:
+    paths:
+      - "modules/omni_ra/**"
+      - ".github/workflows/omni-ra-ci.yml"
+  push:
+    branches:
+      - master
+    paths:
+      - "modules/omni_ra/**"
+      - ".github/workflows/omni-ra-ci.yml"
+  workflow_dispatch:
+
+jobs:
+  host-and-android:
+    name: Host Tests & Android ELF Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository with rcheevos submodule
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Configure and run C host tests
+        run: |
+          cmake -S modules/omni_ra -B build/host-ra -DOMNI_RA_BUILD_TESTS=ON -DCMAKE_BUILD_TYPE=Debug
+          cmake --build build/host-ra --parallel
+          ctest --test-dir build/host-ra --output-on-failure
+
+      - name: Set up Android NDK 29 and CMake
+        uses: android-actions/setup-android@v3
+        with:
+          packages: platform-tools
+      - run: sdkmanager 'ndk;29.0.14206865' 'cmake;3.30.5'
+
+      - name: Build, verify, and stage libomnidroid_ra.so for all ABIs
+        run: python3 modules/omni_ra/build_omni_ra.py
+
+      - name: Run Python tooling & core script tests
+        run: |
+          python3 -m unittest discover -s modules/omni_ra/tests -p "test_*.py" -v
+          python3 -m unittest discover -s . -p "test_*.py" -v

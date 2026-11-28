@@ -1,0 +1,6 @@
+OMNI_RA_1.0 {
+  global:
+    omni_ra_*;
+  local:
+    *;
+};

@@ -14,7 +14,12 @@ android {
             val coresParentDir = projectDir.parentFile
             val coreJniDirs = coresParentDir.listFiles { f ->
                 f.isDirectory && f.name.startsWith("omnidroid_core_")
-            }?.map { File(it, "src/main/jniLibs") }?.filter { it.isDirectory } ?: emptyList()
+            }?.map { File(it, "src/main/jniLibs") }?.filter { it.isDirectory }?.toMutableList() ?: mutableListOf()
+
+            val raJniDir = File(coresParentDir, "modules/omni_ra/src/main/jniLibs")
+            if (raJniDir.isDirectory) {
+                coreJniDirs.add(raJniDir)
+            }
 
             if (coreJniDirs.isNotEmpty()) {
                 jniLibs.setSrcDirs(coreJniDirs)

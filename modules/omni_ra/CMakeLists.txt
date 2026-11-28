@@ -91,6 +91,7 @@ else()
   target_compile_definitions(omnidroid_ra PRIVATE
     _LARGEFILE64_SOURCE
     _FILE_OFFSET_BITS=64
+    _POSIX_C_SOURCE=200809L
   )
   target_compile_options(omnidroid_ra PRIVATE
     -fvisibility=hidden
@@ -130,6 +131,7 @@ if(OMNI_RA_BUILD_TESTS)
   if(MSVC)
     target_compile_definitions(test_omni_ra PRIVATE _CRT_SECURE_NO_WARNINGS)
   else()
+    target_compile_definitions(test_omni_ra PRIVATE _POSIX_C_SOURCE=200809L)
     target_compile_options(test_omni_ra PRIVATE -Wall -Wextra)
   endif()
   target_link_libraries(test_omni_ra PRIVATE omnidroid_ra)

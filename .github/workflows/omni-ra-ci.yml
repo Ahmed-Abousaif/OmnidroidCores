@@ -31,6 +31,8 @@ jobs:
 
       - name: Set up Android NDK 29 and CMake
         uses: android-actions/setup-android@v3
+        with:
+          packages: platform-tools
       - run: sdkmanager 'ndk;29.0.14206865' 'cmake;3.30.5'
 
       - name: Build, verify, and stage libomnidroid_ra.so for all ABIs
